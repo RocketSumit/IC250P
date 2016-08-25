@@ -1,0 +1,10 @@
+Time data using structures
+
+Time taken in Part A =  0.003780 ms 
+Time taken in Part B =  0.500938 ms
+
+
+using histogram
+
+Time taken in Part A =  8.533651 ms 
+Time taken in Part B =  0.002985 ms
