@@ -13,6 +13,7 @@ typedef struct queue{
 }children;
 /* Front points to first element in queue,
     Rear points to last element in queue */
+
 children* createQueue(int capacity);
 int Qinsert(children* ptr, int data);
 int Qdelete(children* ptr);
@@ -29,17 +30,13 @@ int main(){
     {
         Qinsert(group1, i + 1);
     }
-    // printing the queue
-    for (int i = 0; i < players; i++)
-    {
-        printf("%d\t", group1->array[i]);
-    }
-
+  
     int child, potato_position;
-    printf("The removal of sequence is as follows:\n");
+    printf("\n\nThe removal of sequence is as follows:\n\n");
+
     //plan the winning strategy
-   for(int j = 1; j < players; j++ ){
-         for (int k = 1; k <= elimination_number; k++)
+    for(int j = 1; j < players; j++ ){
+         for (int k = 1; k < elimination_number; k++)
         {
               child = Qdelete(group1);
               Qinsert(group1, child);
@@ -56,7 +53,7 @@ int main(){
    }
 
     //declaring the winner
-    printf("Hence, the person at position %d survives (WINNER)\n", Qdelete(group1));
+    printf("\n\nHence, the person at position %d survives (WINNER)\n", Qdelete(group1));
 
     return 0; 
 }
