@@ -1,3 +1,9 @@
+/*-------------------------------------------------------------------------------
+Name: Sumit Patidar
+Roll no: B15237
+Purpose: IC250 assignment, question 01
+Date: 27/08/2016
+---------------------------------------------------------------------------------*/
 #include "my_library.h"
 #include <stdio.h>
 #include <stdlib.h>

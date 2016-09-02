@@ -17,44 +17,14 @@ typedef struct queue{
 children* createQueue(int capacity);
 int Qinsert(children* ptr, int data);
 int Qdelete(children* ptr);
+int hot_potato(int players, int elimination_number);
 
 int main(){
     int players, elimination_number;
     printf("Enter the number of children n and i: ");
     scanf("%d%d", &players, &elimination_number);
 
-    children *group1 = createQueue(players);
-    
-    //insert players in queue
-    for (int i = 0; i < players; i++)
-    {
-        Qinsert(group1, i + 1);
-    }
-  
-    int child, potato_position;
-    printf("\n\nThe removal of sequence is as follows:\n\n");
-
-    //plan the winning strategy
-    for(int j = 1; j < players; j++ ){
-         for (int k = 1; k < elimination_number; k++)
-        {
-              child = Qdelete(group1);
-              Qinsert(group1, child);
-        }
-        //eliminating the potato bearer
-        potato_position = Qdelete(group1);
-
-        if( j == 1)
-            printf("[%d] Firstly, the person at position %d is removed\n", j, potato_position);
-        else if( j < players - 1)
-            printf("[%d] Then person at position %d is removed\n", j, potato_position);
-        else if(j == players - 1 )
-            printf("[%d] Finally, person at position %d is removed\n", j , potato_position);
-   }
-
-    //declaring the winner
-    printf("\n\nHence, the person at position %d survives (WINNER)\n", Qdelete(group1));
-
+    hot_potato(players, elimination_number);
     return 0; 
 }
 //---------------------------------------------------------------------------------------------------------
@@ -118,4 +88,41 @@ int Qdelete(children* ptr){
     }
     
     return item;
+}
+
+int hot_potato(int players, int elimination_number){
+
+    children *group1 = createQueue(players);
+    
+    //insert players in queue
+    for (int i = 0; i < players; i++)
+    {
+        Qinsert(group1, i + 1);
+    }
+  
+    int child, potato_position;
+    printf("\n\nThe removal of sequence is as follows:\n\n");
+
+    //plan the winning strategy
+    for(int j = 1; j < players; j++ ){
+         for (int k = 1; k < elimination_number; k++)
+        {
+              child = Qdelete(group1);
+              Qinsert(group1, child);
+        }
+        //eliminating the potato bearer
+        potato_position = Qdelete(group1);
+
+        if( j == 1)
+            printf("[%d] Firstly, the person at position %d is removed\n", j, potato_position);
+        else if( j < players - 1)
+            printf("[%d] Then person at position %d is removed\n", j, potato_position);
+        else if(j == players - 1 )
+            printf("[%d] Finally, person at position %d is removed\n", j , potato_position);
+   }
+
+    //declaring the winner
+    printf("\n\nHence, the person at position %d survives (WINNER)\n", Qdelete(group1));
+
+    return 0;
 }

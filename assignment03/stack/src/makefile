@@ -1,3 +1,10 @@
+#………………………………………………………………………..
+#Name: Sumit Patidar
+#Roll no = B15237
+#Purpose: IC250 assignment03
+#Date: 30/08/16
+#………………………………………………………………..
+
 IDIR =../include
 CC=gcc
 CFLAGS=-I$(IDIR) $(shell pkg-config --cflags glib-2.0)
@@ -24,3 +31,5 @@ stack: $(OBJ)
 
 clean:
 	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~  
+
+#Makefile template taken from stackoverflow.com
