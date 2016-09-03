@@ -4,15 +4,14 @@
    Purpose: Assignment 04, Q1
    Date: 03/09/2016
    .........................................................*/
+   #ifndef  MY_LIBRARY_H
+   #define MY_LIBRARY_H
 
-#include <stdio.h>
+   #include <stdio.h>
+   #include <glib.h>
+   #include <stdio.h>
 
-int main(int argc, char const *argv[]) {
-        char ch;
+int stackInsert(GSList **ptr, char data);
+char stackRemove(GSList **ptr);
 
-        while (ch!= EOF || ch!= '\n') {
-                ch = getc(stdin);
-
-        }
-        return 0;
-}
+#endif
