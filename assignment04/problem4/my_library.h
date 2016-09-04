@@ -9,7 +9,7 @@ typedef struct matrixElements {
         int j;
         int value;
 }matx;
-int row_cumu_frequency[100];
-int read_matrix(FILE *fptr, matx matrix1[]);
+
+int read_matrix(FILE *fptr, matx matrix1[], int row_cumu_frequency[], int column_cumu_frequency[]);
 
 #endif
