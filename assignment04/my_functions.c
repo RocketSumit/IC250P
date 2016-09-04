@@ -6,16 +6,36 @@
    .........................................................*/
 #include "my_library.h"
 
-int stackInsert(GSList **ptr, char data)
+int stackInsert(GSList **ptr, char *data)
 {
-        *ptr = g_slist_prepend(*ptr, data);
+        *ptr = g_slist_prepend(*ptr, &data);
         return 0;
 }
 
-char stackRemove(GSList **ptr)
+int stackRemove(GSList **ptr)
 {
-        char item;
-        item = (*ptr)->data;
+        if(g_slist_nth(*ptr, 0) == NULL) {
+                return 0;
+        }
         *ptr = g_slist_delete_link(*ptr, *ptr);
-        return item;
+        return 1;
+}
+
+int check(GSList *ptr, char str[]){
+        int length = strlen(str);
+
+        for (int i = 0; i < length; i++) {
+                if(str[i] == '(') {
+                        stackInsert(&ptr, (str + i));
+                }
+                else if (str[i] == ')') {
+                        if(stackRemove(&ptr) == 0)
+                                return 0;
+                }
+        }
+
+        if(stackRemove(&ptr) == 1)
+                return 0;
+
+        return 1;
 }

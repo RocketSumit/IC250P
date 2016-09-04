@@ -9,9 +9,11 @@
 
    #include <stdio.h>
    #include <glib.h>
-   #include <stdio.h>
+   #include <stdlib.h>
+   #include <string.h>
 
-int stackInsert(GSList **ptr, char data);
-char stackRemove(GSList **ptr);
+int stackInsert(GSList **ptr, char *data);
+int stackRemove(GSList **ptr);
+int check(GSList *ptr, char str[]);
 
 #endif
