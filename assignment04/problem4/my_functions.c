@@ -1,11 +1,7 @@
 
 #include "my_library.h"
 
-int read_matrix(FILE *fptr, matx matrix1[], int row_cumu_frequency[], int column_cumu_frequency[]){
-
-        int rows, columns, total_elements;
-        fscanf(fptr, "%d %d\n", &rows, &columns);
-        total_elements = rows*columns;
+int read_matrix(FILE *fptr, matx matrix1[], int row_cumu_frequency[], int column_cumu_frequency[], int total_elements, int rows, int columns){
 
         int row_index = 1, column_index = 1, current, nonzero_element_count = 0;
 
@@ -38,10 +34,10 @@ int read_matrix(FILE *fptr, matx matrix1[], int row_cumu_frequency[], int column
         return nonzero_element_count;
 }
 
-int transpose(matx matrix1[], matx matrix2[], int column_cumu_frequency[], int nonzero_element_count)
+int transpose(matx matrix1[], matx matrix2[], int column_cumu_frequency[], int nonzero_element_count, int transpose_column_elements[])
 {
-        //copy the array of column frequency to other
-        int transpose_column_elements[100] = {0};
+
+
 
         int column_index;
         for (size_t k = 0; k < nonzero_element_count; k++) {
@@ -51,6 +47,21 @@ int transpose(matx matrix1[], matx matrix2[], int column_cumu_frequency[], int n
                 matrix2[column_index].j = matrix1[k].i;
                 matrix2[column_index].value = matrix1[k].value;
                 transpose_column_elements[matrix1[k].j]++;
+        }
+        return 0;
+}
+int getElement(int row_position, int column_position, matx matrix[],int row_cumu_frequency[]){
+
+        if(row_cumu_frequency[row_position] == 0)
+                return 0;
+
+        int no_of_elements_in_row = row_cumu_frequency[row_position] - row_cumu_frequency[row_position - 1];
+
+        int current_matrix_position = row_cumu_frequency[row_position - 1];
+        for (size_t i = 0; i < no_of_elements_in_row; i++) {
+                if(matrix[current_matrix_position ].j == column_position)
+                        return matrix[current_matrix_position].value;
+                current_matrix_position++;
         }
         return 0;
 }
