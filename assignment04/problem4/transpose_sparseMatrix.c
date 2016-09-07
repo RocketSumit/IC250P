@@ -1,4 +1,10 @@
-  #include "my_library.h"
+/*........................................
+   Name : Sumit Patidar
+   Roll no : B15237
+   Purpose : IC250 assignment 04, Q4
+   Date : 07/09/16
+   .........................................*/
+#include "my_library.h"
 
 int main(int argc, char const *argv[]) {
 
@@ -27,6 +33,7 @@ int main(int argc, char const *argv[]) {
 
         fprintf(fptr2, "%d\t%d\n", columns, rows);
 
+        //write transpose matrix to new file
         for (size_t i = 1; i <= columns; i++) {
                 for (size_t j = 1; j <= rows; j++) {
                         current_transpose_element = getElement(i, j, matrix2, column_cumu_frequency);

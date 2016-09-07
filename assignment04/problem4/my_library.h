@@ -1,3 +1,9 @@
+/*........................................
+   Name : Sumit Patidar
+   Roll no : B15237
+   Purpose : IC250 assignment 04, Q4
+   Date : 07/09/16
+   .........................................*/
 #ifndef  MY_LIBRARY_H_
 #define MY_LIBRARY_H_
 

@@ -1,6 +1,13 @@
+/*........................................
+   Name : Sumit Patidar
+   Roll no : B15237
+   Purpose : IC250 assignment 04, Q4
+   Date : 07/09/16
+   .........................................*/
 
 #include "my_library.h"
 
+//function to read sparse matrix
 int read_matrix(FILE *fptr, matx matrix1[], int row_cumu_frequency[], int column_cumu_frequency[], int total_elements, int rows, int columns){
 
         int row_index = 1, column_index = 1, current, nonzero_element_count = 0;
@@ -8,6 +15,7 @@ int read_matrix(FILE *fptr, matx matrix1[], int row_cumu_frequency[], int column
         for (size_t i = 0; i < total_elements; i++) {
                 fscanf(fptr, "%d",&current);
 
+                //store nonzero element in list.
                 if (current != 0) {
                         matrix1[nonzero_element_count].i = row_index;
                         matrix1[nonzero_element_count].j = column_index;
@@ -15,6 +23,7 @@ int read_matrix(FILE *fptr, matx matrix1[], int row_cumu_frequency[], int column
                         nonzero_element_count++;
                 }
                 column_index++;
+
                 if (column_index == (columns + 1)) {
                         row_cumu_frequency[row_index] = nonzero_element_count;
                         row_index++;
@@ -34,10 +43,9 @@ int read_matrix(FILE *fptr, matx matrix1[], int row_cumu_frequency[], int column
         return nonzero_element_count;
 }
 
+//function to do transpose of known matrix
 int transpose(matx matrix1[], matx matrix2[], int column_cumu_frequency[], int nonzero_element_count, int transpose_column_elements[])
 {
-
-
 
         int column_index;
         for (size_t k = 0; k < nonzero_element_count; k++) {
@@ -50,6 +58,8 @@ int transpose(matx matrix1[], matx matrix2[], int column_cumu_frequency[], int n
         }
         return 0;
 }
+
+//function to get the i,j element of matrix
 int getElement(int row_position, int column_position, matx matrix[],int row_cumu_frequency[]){
 
         if(row_cumu_frequency[row_position] == 0)
