@@ -6,12 +6,14 @@
    .........................................................*/
 #include "my_library.h"
 
+//function to insert the data to stack
 int stackInsert(GSList **ptr, char *data)
 {
         *ptr = g_slist_prepend(*ptr, &data);
         return 0;
 }
 
+//functin to pop the data from stack
 int stackRemove(GSList **ptr)
 {
         if(g_slist_nth(*ptr, 0) == NULL) {
@@ -21,6 +23,7 @@ int stackRemove(GSList **ptr)
         return 1;
 }
 
+//function to check for balanced parenthesis in string
 int check(GSList *ptr, char str[]){
         int length = strlen(str);
 

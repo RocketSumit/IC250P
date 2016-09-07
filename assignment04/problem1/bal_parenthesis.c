@@ -10,13 +10,17 @@
 int main(int argc, char const *argv[]) {
         char str[50];
         GSList *stack = NULL;
-        printf("Enter the expression (or type 0 to exit):");
-        scanf("%[^\n]s", str);
+
+        printf("Enter the expression (or type e to exit):");
+        scanf("%[^\n]s", str); //reads the string till the end of line
+
         int boolian;
 
-        if (strlen(str) == 1 && atof(str) == 0.0) {
+        //check for exit condition
+        if (strcmp(str, "e") == 0.0) {
                 return 0;
         }
+
         boolian = check(stack, str);
 
         if(boolian == 1) {

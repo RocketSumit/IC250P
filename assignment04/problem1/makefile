@@ -1,3 +1,9 @@
+#.........................................................
+#   Name: Sumit Patidar
+#   Roll no: B15237
+#   Purpose: Assignment 04, Q1
+#   Date: 03/09/2016
+#..........................................................
 
 q1 : bal_parenthesis.o my_functions.o
 	cc -o q1 bal_parenthesis.o my_functions.o `pkg-config --cflags --libs glib-2.0`
