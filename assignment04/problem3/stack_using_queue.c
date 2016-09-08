@@ -10,19 +10,29 @@
 int main(int argc, char const *argv[]) {
         GSList *stack;
 
-        int n[3];
-        printf("Enter three integer elements to be stacked: ");
-        scanf("%d%d%d",&n[0], &n[1], &n[2]);
 
-        for (size_t i = 0; i < 3; i++) {
+        int total_elements;
+        printf("Enter how many elements to be entered:\n");
+        scanf("%d", &total_elements);
+
+        int n[total_elements];
+
+        for (size_t i = 0; i < total_elements; i++) {
+                printf("Enter the element: ");
+                scanf("%d", &n[i]);
+                printf("\n");
+        }
+
+        for (size_t i = 0; i < total_elements; i++) {
                 push_stack(&stack, n[i]);
         }
 
         //print the pop values
         printf("\nPopped values are: ");
-        for (size_t i = 0; i < 3; i++) {
+        for (size_t i = 0; i < total_elements; i++) {
                 printf("%d\t", pop(&stack));
         }
+
         printf("\n");
 
         return 0;

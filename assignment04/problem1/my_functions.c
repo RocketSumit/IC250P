@@ -28,10 +28,10 @@ int check(GSList *ptr, char str[]){
         int length = strlen(str);
 
         for (int i = 0; i < length; i++) {
-                if(str[i] == '(') {
+                if(str[i] == '(' || str[i] == '{') {
                         stackInsert(&ptr, (str + i));
                 }
-                else if (str[i] == ')') {
+                else if (str[i] == ')' || str[i] == '}') {
                         if(stackRemove(&ptr) == 0)
                                 return 0;
                 }

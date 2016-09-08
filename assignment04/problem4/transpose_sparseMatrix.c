@@ -3,17 +3,20 @@
    Roll no : B15237
    Purpose : IC250 assignment 04, Q4
    Date : 07/09/16
-   .........................................*/
+   ...........................................*/
+
 #include "my_library.h"
 
 int main(int argc, char const *argv[]) {
 
-        FILE *fptr;
-        fptr = fopen("/Users/sumitpatidar/Desktop/data.txt", "r");
+        printf("Enter the row and column :\n");
+
         int rows, columns, total_elements;
-        fscanf(fptr, "%d %d\n", &rows, &columns);
+
+        scanf("%d%d", &rows, &columns);
 
         total_elements = rows*columns;
+
         matx matrix1[100];
         matx matrix2[100];
 
@@ -23,7 +26,7 @@ int main(int argc, char const *argv[]) {
         int nonzero_elements;
 
         //read the matrix and store cumulative frequency of row and column elements in arrays
-        nonzero_elements = read_matrix(fptr, matrix1, row_cumu_frequency, column_cumu_frequency, total_elements, rows, columns);
+        nonzero_elements = read_matrix(matrix1, row_cumu_frequency, column_cumu_frequency, total_elements, rows, columns);
 
         //do transpose
         transpose(matrix1, matrix2, column_cumu_frequency, nonzero_elements, transpose_column_elements);
@@ -42,7 +45,6 @@ int main(int argc, char const *argv[]) {
                 fprintf(fptr2, "\n");
         }
 
-        fclose(fptr);
         fclose(fptr2);
 
         return 0;

@@ -27,7 +27,7 @@ int main(int argc, char const *argv[]) {
                 printf("Expression \"%s\" is having balanced parenthesis.\n", str);
         }
         else{
-                printf("Expression \"%s\" is having unbalaced parenthesis.\n", str);
+                printf("Expression \"%s\" is having unbalanced parenthesis.\n", str);
         }
 
         return 0;

@@ -8,12 +8,14 @@
 #include "my_library.h"
 
 //function to read sparse matrix
-int read_matrix(FILE *fptr, matx matrix1[], int row_cumu_frequency[], int column_cumu_frequency[], int total_elements, int rows, int columns){
+int read_matrix(matx matrix1[], int row_cumu_frequency[], int column_cumu_frequency[], int total_elements, int rows, int columns){
 
         int row_index = 1, column_index = 1, current, nonzero_element_count = 0;
 
+        printf("Enter elements one by one\n");
+
         for (size_t i = 0; i < total_elements; i++) {
-                fscanf(fptr, "%d",&current);
+                scanf("%d",&current);
 
                 //store nonzero element in list.
                 if (current != 0) {
