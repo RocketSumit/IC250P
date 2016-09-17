@@ -11,6 +11,10 @@ struct sparse
 };
 
 void createSparse(int **sparse_matrix, int row_n, int column_n);
-void display(int *sparse_matrix, int row_n, int column_n);
+void displayMatrix(int *sparse_matrix, int row_n, int column_n);
+int count(int *sparse_matrix, int row_n, int column_n);
+void createTupple(int *sparse_matrix, struct sparse *s1, int row_n, int column_n);
+void displayTupple(struct sparse s1);
+
 
 #endif
