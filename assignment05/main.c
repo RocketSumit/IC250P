@@ -1,19 +1,21 @@
 #include "my_library.h"
 
 int main(int argc, char const *argv[]) {
-        struct sparse s1 = {0};
-        int *sparse_matrix = NULL;
-        if(argc != 3) {
-                printf("Usage requires two command line parameters:\n\t[a] No of rows\n\t[b] No of columns\n");
-                exit(0);
-        }
-        int row_n = atoi(argv[1]);
-        int column_n = atoi(argv[2]);
+        //struct sparse s1 = {0};
+        double *sparse_matrix = NULL;
 
-        createSparse(&sparse_matrix, row_n, column_n);
+        int N, row_n, column_n;
+        double B;
+
+        printf("Enter the values of B and N: ");
+        scanf("%lf%d",&B, &N);
+
+        row_n = column_n = N;
+
+        createSparse(&sparse_matrix, N, B);
         displayMatrix(sparse_matrix, row_n, column_n);
-        createTupple(sparse_matrix, &s1, row_n, column_n);
-        displayTupple(s1);
+        //createTupple(sparse_matrix, &s1, row_n, column_n);
+        //displayTupple(s1);
 
         return 0;
 }

@@ -1,21 +1,40 @@
 #include "my_library.h"
 
 /* Dynamically creates matrix of sizeof row_n*column_n */
-void createSparse(int **sparse_matrix, int row_n, int column_n)
+void createSparse(double **sparse_matrix, int N, double B)
 {
-        int n;
+        int i;
+        double b = N*N;
+        double d = -1*(2*N*N + B);
+        double a = b;
 
-        *sparse_matrix = (int *) malloc (row_n * column_n * sizeof(int));
+        *sparse_matrix = (double *) malloc (N * N * sizeof(double));
 
-        for (int i = 0; i < (row_n*column_n); i++) {
-                printf("\nEnter sparse matrix %dth element: ", i);
-                scanf("%d", &n );
-                *(*sparse_matrix + i) = n;
+        for ( i = 0; i < N; i++) {
+                if (i == 0)
+                        *(*sparse_matrix + i) = 1;
+                else
+                        *(*sparse_matrix + i) = 0;
+        }
+
+        for ( int j = 1; j < N; j++) {
+                for (int k = 0; k <N; k++) {
+
+                        if(i == (j*N + j - 1))
+                                *(*sparse_matrix + i) = b;
+                        else if (i == (j*N + j))
+                                *(*sparse_matrix + i) = d;
+                        else if (i == (j*N + j + 1))
+                                *(*sparse_matrix + i) = a;
+                        else
+                                *(*sparse_matrix + i) = 0;
+                        i++;
+                }
         }
 }
 
 /* Display all elements of sparse matrix */
-void displayMatrix(int *sparse_matrix, int row_n, int column_n)
+void displayMatrix(double *sparse_matrix, int row_n, int column_n)
 {
 
         for (int i = 0; i < row_n*column_n; i++) {
@@ -24,13 +43,13 @@ void displayMatrix(int *sparse_matrix, int row_n, int column_n)
                 if (i%column_n == 0) {
                         printf("\n");
                 }
-                printf("%d\t", *(sparse_matrix + i));
+                printf("%lf\t", *(sparse_matrix + i));
         }
         printf("\n\n");
 }
 
 /* Counts number of non-zero elements */
-int count(int *sparse_matrix, int row_n, int column_n)
+int count(double *sparse_matrix, int row_n, int column_n)
 {
         int count = 0;
 
@@ -44,10 +63,10 @@ int count(int *sparse_matrix, int row_n, int column_n)
 }
 
 /* Creates an array that stores information about non-zero elements */
-void createTupple(int *sparse_matrix, struct sparse *s1, int row_n, int column_n)
+void createTupple(double *sparse_matrix, struct sparse *s1, int row_n, int column_n)
 {
         s1->no_of_tupples = count(sparse_matrix, row_n, column_n) + 1;
-        s1->tupple = (int *) malloc (3 * s1->no_of_tupples * sizeof(int));
+        s1->tupple = (double *) malloc (3 * s1->no_of_tupples * sizeof(double));
 
         *(s1->tupple + 0) = row_n;
         *(s1->tupple + 1) = column_n;
@@ -83,7 +102,7 @@ void displayTupple(struct sparse s1)
         for (int i = 3; i < (s1.no_of_tupples * 3); i++) {
                 if(i%3 == 0)
                         printf("\n");
-                printf("%d\t", *(s1.tupple + i));
+                printf("%lf\t", *(s1.tupple + i));
         }
 
         printf("\n\n");

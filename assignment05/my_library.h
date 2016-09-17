@@ -6,14 +6,14 @@
 
 struct sparse
 {
-        int *tupple;
+        double *tupple;
         int no_of_tupples;
 };
 
-void createSparse(int **sparse_matrix, int row_n, int column_n);
-void displayMatrix(int *sparse_matrix, int row_n, int column_n);
-int count(int *sparse_matrix, int row_n, int column_n);
-void createTupple(int *sparse_matrix, struct sparse *s1, int row_n, int column_n);
+void createSparse(double **sparse_matrix, int N, double B);
+void displayMatrix(double *sparse_matrix, int row_n, int column_n);
+int count(double *sparse_matrix, int row_n, int column_n);
+void createTupple(double *sparse_matrix, struct sparse *s1, int row_n, int column_n);
 void displayTupple(struct sparse s1);
 
 
