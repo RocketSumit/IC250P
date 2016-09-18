@@ -4,17 +4,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct sparse
+struct coefficients
 {
-        double *tupple;
-        int no_of_tupples;
+        double b;
+        double d;
+        double a;
 };
 
-void createSparse(double **sparse_matrix, int N, double B);
+void createSparse(double **sparse_matrix, int N, struct coefficients c1);
 void displayMatrix(double *sparse_matrix, int row_n, int column_n);
-int count(double *sparse_matrix, int row_n, int column_n);
-void createTupple(double *sparse_matrix, struct sparse *s1, int row_n, int column_n);
-void displayTupple(struct sparse s1);
-
+void create_array(double **main_diagonal, double ** below_diagonal, double **above_diagonal, double **r, int N, struct coefficients c1);
+void displayArray(double *main_diagonal, double *below_diagonal, double *above_diagonal, double *r, int N);
 
 #endif
