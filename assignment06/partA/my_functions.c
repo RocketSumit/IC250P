@@ -25,16 +25,17 @@ int compareStrings(char *a, char *b)
         int count = 0;
 
         while(*(a + count) == *(b + count)) {
+                count++;
                 if(*(a + count) == '\0' && *(b + count) == '\0')
                         return 0;
                 else if(*(a + count) == '\0')
                         return 1;
-                else
+                else if(*(b + count) == '\0')
                         return -1;
-                count++;
+
         }
 
-        if(*(a + count)>*(b + count))
+        if(*(a + count)<*(b + count))
                 return 1;
         else
                 return -1;
