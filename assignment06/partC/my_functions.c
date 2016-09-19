@@ -6,7 +6,8 @@ struct randomListNode* copyRandomList (struct randomListNode *head)
 
         current = head;
         do {
-                struct randomListNode *copy_node = NULL;
+                struct randomListNode *copy_node;
+                copy_node = (struct randomListNode*)malloc(sizeof(struct randomListNode));
                 temp = current->next;
                 current->next = copy_node;
                 copy_node->label = current->label;
