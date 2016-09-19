@@ -10,7 +10,7 @@ int main(int argc, char const *argv[]) {
 
         int **matrix = maker(m, n);
 
-        writer(matrix, m, n, "/Users/sumitpatidar/Desktop/matrix.txt/");
+        writer(matrix, m, n,"/Users/sumitpatidar/Desktop/matrix.txt");
         printDelete(matrix, m, n);
 
         return 0;

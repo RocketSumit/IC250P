@@ -21,9 +21,8 @@ int **maker(int m,int n)
 void writer(int **matrix, int m, int n, char *filename)
 {
         FILE *fptr;
-        fptr = fopen("filename", "w");
-
-        fprintf(fptr, "%d\t%d\n",m,n);
+        fptr = fopen(filename, "w");
+        fprintf(fptr,"%d\t%d\n",m,n);
 
         for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
@@ -31,6 +30,7 @@ void writer(int **matrix, int m, int n, char *filename)
                 }
                 fprintf(fptr,"\n");
         }
+
         fclose(fptr);
 }
 
