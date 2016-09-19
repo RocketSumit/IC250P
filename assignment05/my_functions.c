@@ -97,3 +97,37 @@ void displayArray(double *main_diagonal, double *below_diagonal, double *above_d
         }
         printf("\t\t%lf\t\t\t%lf\n",*(main_diagonal + N - 1), *(r + N - 1));
 }
+
+double* gaussElimination(int **sparse_matrix, int N)
+{
+        double c, sum, *x = NULL;
+        x = (double *) malloc (N * sizeof(double));
+
+        for(int j=1; j<=N; j++) /* loop for the generation of upper triangular matrix*/
+        {
+                for(int i=1; i<=N; i++)
+                {
+                        if(i>j)
+                        {
+                                c=sparse_matrix[i][j]/sparse_matrix[j][j];
+                                for(int k=1; k<=N+1; k++)
+                                {
+                                        sparse_matrix[i][k]=sparse_matrix[i][k]-c*sparse_matrix[j][k];
+                                }
+                        }
+                }
+        }
+        x[N]=sparse_matrix[N][N+1]/sparse_matrix[N][N];
+        /* this loop is for backward substitution*/
+        for(int i=N-1; i>=1; i--)
+        {
+                sum=0;
+                for(int j=i+1; j<=N; j++)
+                {
+                        sum=sum+sparse_matrix[i][j]*x[j];
+                }
+                x[i]=(sparse_matrix[i][N+1]-sum)/sparse_matrix[i][i];
+        }
+
+        return x;
+}
