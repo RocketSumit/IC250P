@@ -16,13 +16,22 @@ int main(int argc, char const *argv[]) {
         row_n = column_n = N;
 
         createSparse(&sparse_matrix, N, c1);
-        displayMatrix(sparse_matrix, row_n, column_n);
+        //displayMatrix(sparse_matrix, row_n, column_n);
 
 
         double *main_diagonal = NULL, *below_diagonal = NULL, *above_diagonal = NULL, *r = NULL;
 
         create_array(&main_diagonal, &below_diagonal, &above_diagonal, &r,  N, c1);
-        displayArray(main_diagonal, below_diagonal, above_diagonal, r, N);
+        //displayArray(main_diagonal, below_diagonal, above_diagonal, r, N);
+
+        double **augmented_matrix = NULL;
+        augmented_matrix = createAugmentedMatrix(sparse_matrix, r, N);
+
+        double *x_gauss = NULL, *x_analytical = NULL;
+
+        x_gauss = gaussElimination(augmented_matrix, N);
+        x_analytical = analyticalSolution (B, N);
+        printToFile(x_gauss, x_analytical, N);
 
         return 0;
 }

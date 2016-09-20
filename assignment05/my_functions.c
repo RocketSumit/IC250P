@@ -98,35 +98,36 @@ void displayArray(double *main_diagonal, double *below_diagonal, double *above_d
         printf("\t\t%lf\t\t\t%lf\n",*(main_diagonal + N - 1), *(r + N - 1));
 }
 
-double* gaussElimination(int **sparse_matrix, int N)
+double* gaussElimination(double **augmented_matrix, int N)
 {
+        int i, j, k;
         double c, sum, *x = NULL;
         x = (double *) malloc (N * sizeof(double));
 
-        for(int j=0; j<N; j++) /* loop for the generation of upper triangular matrix*/
+        for(j=0; j<=N; j++) /* loop for the generation of upper triangular matrix*/
         {
-                for(int i= 0; i<N; i++)
+                for(i=0; i<N; i++)
                 {
                         if(i>j)
                         {
-                                c=sparse_matrix[i][j]/sparse_matrix[j][j];
-                                for(int k=0; k<=N; k++)
+                                c=augmented_matrix[i][j]/augmented_matrix[j][j];
+                                for(k=0; k<=N; k++)
                                 {
-                                        sparse_matrix[i][k]=sparse_matrix[i][k]-c*sparse_matrix[j][k];
+                                        augmented_matrix[i][k]=augmented_matrix[i][k]-c*augmented_matrix[j][k];
                                 }
                         }
                 }
         }
-        x[N]=sparse_matrix[N][N+1]/sparse_matrix[N][N];
+        x[N - 1]=augmented_matrix[N - 1][N]/augmented_matrix[N - 1][N - 1];
         /* this loop is for backward substitution*/
-        for(int i=N-2; i>=0; i--)
+        for(i=N-2; i>=0; i--)
         {
                 sum=0;
-                for(int j=i; j<N; j++)
+                for(j=i+1; j<N; j++)
                 {
-                        sum=sum+sparse_matrix[i][j]*x[j];
+                        sum=sum+augmented_matrix[i][j]*x[j];
                 }
-                x[i]=(sparse_matrix[i][N+1]-sum)/sparse_matrix[i][i];
+                x[i]=(augmented_matrix[i][N]-sum)/augmented_matrix[i][i];
         }
 
         return x;
@@ -134,9 +135,54 @@ double* gaussElimination(int **sparse_matrix, int N)
 
 double* analyticalSolution(double B, int N)
 {
-        double *x = NULL;
+        double *x = (double *) malloc(sizeof(double));
+        double argument = sqrt(B);
         for(int i =0; i<N; i++) {
-                x[i] = cosh(sqrt(B)*(1 - (i + 1)/N))/cosh(sqrt(B));
+                x[i] = (double) cosh((double)argument*(double)(1 - (double)((i + 1)/N)))/(double)cosh(argument);
         }
         return x;
+}
+
+void printToFile(double* x_gauss, double *x_analytical, int N)
+{
+        FILE *fptr = NULL;
+        fptr = fopen("results.txt", "w");
+        fprintf(fptr, "%s\t%s\n", "gaussElimination", "analytical");
+
+        for (int i = 0; i < N; i++ ) {
+                fprintf(fptr, "%lf\t%lf\n", x_gauss[i], x_analytical[i]);
+        }
+}
+
+double **createAugmentedMatrix(double *sparse_matrix, double *r, int N)
+{
+        double **augmented_matrix = (double **) malloc((N) *sizeof(double *));
+
+        for (int i =0; i<N; i++) {
+                augmented_matrix[i] = (double *)malloc((N + 1)*sizeof(double));
+        }
+
+        // copy sparse matrix to augmented_matrix
+        for(int i = 0; i < N; i++) {
+                for (int j = 0; j<N; j++) {
+                        augmented_matrix[i][j] = *(sparse_matrix + i*N + j);
+                }
+        }
+
+        //copy right hand side vector to augmented_matrix
+        for(int i = 0; i<N; i++) {
+                augmented_matrix[i][N] = *(r + i);
+        }
+
+        return augmented_matrix;
+}
+
+void printAugmentedMatrix(double **augmented_matrix, int N){
+
+        for(int i = 0; i < N; i++) {
+                for(int j = 0; j < N + 1; j++) {
+                        printf("%lf\t", augmented_matrix[i][j] );
+                }
+                printf("\n");
+        }
 }
