@@ -42,3 +42,47 @@ struct randomListNode* copyRandomList (struct randomListNode *head)
 
         return copy_head;
 }
+
+void createOriginalSinglyList(struct randomListNode **head, int identity)
+{
+        struct randomListNode *newNode = NULL, *current = *head;
+        newNode = (struct randomListNode*)malloc(sizeof(struct randomListNode));
+
+        newNode->label = identity;
+
+        if(*head == NULL) {
+                *head = newNode;
+                newNode->next = NULL;
+        }
+        else{
+                while(current->next != NULL) {
+                        current = current->next;
+                }
+
+                current->next = newNode;
+                newNode->next = NULL;
+        }
+}
+
+void insertRandomLinks(struct randomListNode *head, int identity, int random_label)
+{
+        struct randomListNode *current_node = head, *current_random_node = head;
+
+        //search for identity element
+        // improve it further for not matching any element
+        while(current_node->label != identity) {
+                current_node = current_node->next;
+        }
+
+        //search for node to which current_node randomly points
+        while(current_random_node->label != random_label) {
+                current_random_node = current_random_node->next;
+        }
+
+        //eliminating the possibility of pointing to itself
+        if(current_node == current_random_node)
+                return;
+
+        current_node->random = current_random_node;
+
+}

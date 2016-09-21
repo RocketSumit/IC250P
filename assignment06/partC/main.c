@@ -9,22 +9,50 @@
 
 int main(int argc, char const *argv[]) {
         struct randomListNode *head = NULL, *head_copy = NULL;
-        struct randomListNode r1, r2, r3;
-        r1.label = 1;
-        r2.label = 2;
-        r3.label = 3;
-        head = &r1;
-        r1.next = &r2;
-        r2.next = &r3;
-        r3.next = NULL;
-        r1.random = &r3;
-        r2.random = &r1;
-        r3.random = &r2;
+        int size = 0, count = 0, random_label = 0;
+
+        clear();
+        printf("Enter the size of doubly linked list: ");
+        scanf("%d", &size);
+
+        /* create the singly linked list */
+        for(int i = 0; i<size; i++) {
+                count++;
+                createOriginalSinglyList(&head, count);
+        }
+
+        /* asked for random relations */
+        for(int i = 0; i<size; i++) {
+                printf("[%d] random -> ", i+1);
+                scanf("%d", &random_label);
+                insertRandomLinks(head, i + 1, random_label);
+                printf("\n");
+        }
+
+        count = 0;
+        struct randomListNode *iterator = NULL;
+        iterator = head;
+
+        printf("Original Linked List:\n");
+        /* print the original doubly linked list */
+        while(iterator != NULL) {
+                count++;
+                printf("[%d] random -> %d\n", count, iterator->random->label);
+                iterator = iterator->next;
+        }
 
         head_copy = copyRandomList(head);
-        while(head_copy != NULL) {
-                printf("%d\n", head_copy->random->label);
-                head_copy = head_copy->next;
+        count = 0;
+        iterator = head_copy;
+
+        printf("\n\nDeep Copied Linked List:\n");
+        /* print the copied doubly linked list */
+        while(iterator != NULL) {
+                count++;
+                printf("[%d] random -> %d\n", count, iterator->random->label);
+                iterator = iterator->next;
         }
+        printf("\n\n");
+
         return 0;
 }
