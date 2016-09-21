@@ -138,7 +138,7 @@ double* analyticalSolution(double B, int N)
         double *x = (double *) malloc(sizeof(double));
         double argument = sqrt(B);
         for(int i =0; i<N; i++) {
-                x[i] = (double) cosh((double)argument*(double)(1 - (double)((i + 1)/N)))/(double)cosh(argument);
+                x[i] = cosh(argument*(double)(1 - ((i + 1)/(double)N)))/cosh(argument);
         }
         return x;
 }

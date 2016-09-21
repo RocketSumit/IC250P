@@ -1,3 +1,9 @@
+/*..............................................................................
+   Name: Sumit Patidar
+   Roll no: B15237
+   Purpose: Assignment 06, part C
+   Date: 21/09/2016
+   ..............................................................................*/
 #include "my_library.h"
 
 void swapPointers(int *a, int *b)
@@ -39,4 +45,13 @@ int compareStrings(char *a, char *b)
                 return 1;
         else
                 return -1;
+}
+
+void countTillNum(int n)
+{
+        int *ptr = NULL;
+        ptr = &n;
+        if(*ptr == 0)
+                printf("%d\n", *ptr);
+        else countTillNum((*ptr) - 1);
 }

@@ -1,4 +1,12 @@
+
+/*..............................................................................
+   Name: Sumit Patidar
+   Roll no: B15237
+   Purpose: Assignment 06, part C
+   Date: 21/09/2016
+   ..............................................................................*/
 #include "my_library.h"
+
 int main(int argc, char const *argv[]) {
         struct randomListNode *head = NULL, *head_copy = NULL;
         struct randomListNode r1, r2, r3;

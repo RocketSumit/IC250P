@@ -1,3 +1,9 @@
+/*..............................................................................
+   Name: Sumit Patidar
+   Roll no: B15237
+   Purpose: Assignment 06, part C
+   Date: 21/09/2016
+   ..............................................................................*/
 #include "my_library.h"
 
 int main(int argc, char const *argv[]) {
