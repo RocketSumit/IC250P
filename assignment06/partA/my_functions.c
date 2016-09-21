@@ -49,9 +49,9 @@ int compareStrings(char *a, char *b)
 
 void countTillNum(int n)
 {
-        int *ptr = NULL;
-        ptr = &n;
+        int *ptr = &n;
         if(*ptr == 0)
-                printf("%d\n", *ptr);
-        else countTillNum((*ptr) - 1);
+                return;
+        countTillNum(*ptr -1);
+        printf("%d\n", *ptr);
 }

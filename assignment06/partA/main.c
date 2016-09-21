@@ -7,9 +7,9 @@
 #include "my_library.h"
 
 int main(int argc, char const *argv[]) {
-        int choice, a, b;
+        int choice, a, b, n;
         char string1[100], string2[100];
-        printf("Enter the respectivec choice: \n1 for swapping pointers\n2 for comparing integers\n3 for comparing strings\n");
+        printf("Enter the respectivec choice: \n1 for swapping pointers\n2 for comparing integers\n3 for comparing strings\n4 for counting till n\n");
         scanf("%d", &choice);
 
         switch (choice) {
@@ -32,6 +32,12 @@ int main(int argc, char const *argv[]) {
                 printf("Enter two strings to compare\n");
                 scanf("%s%s",string1, string2);
                 printf("Comparison result: %d\n", compareStrings(string1, string2) );
+                break;
+        case 4:
+                printf("Enter the value of n: ");
+                scanf("%d", &n);
+                printf("\n");
+                countTillNum(n);
         }
 
         return 0;
