@@ -24,14 +24,14 @@ int main(int argc, char const *argv[]) {
         create_array(&main_diagonal, &below_diagonal, &above_diagonal, &r,  N, c1);
         //displayArray(main_diagonal, below_diagonal, above_diagonal, r, N);
 
-        double **augmented_matrix = NULL;
+        double **augmented_matrix = NULL, *x_gauss = NULL, *x_analytical = NULL;
+
         augmented_matrix = createAugmentedMatrix(sparse_matrix, r, N);
-
-        double *x_gauss = NULL, *x_analytical = NULL;
-
         x_gauss = gaussElimination(augmented_matrix, N);
         x_analytical = analyticalSolution (B, N);
         printToFile(x_gauss, x_analytical, N);
 
+        char *commandsForGnuplot[] = { "set terminal png"," set title\"theta vs x*\"", " set output 'a.png'", " plot \"results.txt\" using 1:3 "};
+        plot1(commandsForGnuplot, 5);
         return 0;
 }

@@ -21,5 +21,6 @@ void printAugmentedMatrix(double **augmented_matrix, int N);
 double* gaussElimination(double **augmented_matrix, int N);
 double* analyticalSolution(double B, int N);
 void printToFile(double* x_gauss, double *x_analytical, int N);
+void plot1(char *commands[], int no_of_commands);
 
 #endif

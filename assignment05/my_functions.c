@@ -118,7 +118,9 @@ double* gaussElimination(double **augmented_matrix, int N)
                         }
                 }
         }
+
         x[N - 1]=augmented_matrix[N - 1][N]/augmented_matrix[N - 1][N - 1];
+
         /* this loop is for backward substitution*/
         for(i=N-2; i>=0; i--)
         {
@@ -137,20 +139,37 @@ double* analyticalSolution(double B, int N)
 {
         double *x = (double *) malloc(sizeof(double));
         double argument = sqrt(B);
+
         for(int i =0; i<N; i++) {
-                x[i] = cosh(argument*(double)(1 - ((i + 1)/(double)N)))/cosh(argument);
+                x[i] = cosh(argument*(double)(1 - ((double)(i + 1)/(double)N)))/cosh(argument);
         }
+
         return x;
+}
+
+/* determinnes root mean square error for entire temperatures */
+
+double errorEstimation(double *x_analytical, double *x_gauss, int N)
+{
+        double sum = 0;
+
+        /* adding the squares of differences */
+        for (int i = 0; i < N; i++) {
+                sum += pow(*(x_gauss + i) - *(x_analytical + i), 2);
+        }
+
+        return sqrt(sum/N);
+
 }
 
 void printToFile(double* x_gauss, double *x_analytical, int N)
 {
         FILE *fptr = NULL;
         fptr = fopen("results.txt", "w");
-        fprintf(fptr, "%s\t%s\n", "gaussElimination", "analytical");
+        fprintf(fptr, "%s\t%s\t\t%s\n", "#gaussElimination", "analytical", "x*");
 
         for (int i = 0; i < N; i++ ) {
-                fprintf(fptr, "%lf\t%lf\n", x_gauss[i], x_analytical[i]);
+                fprintf(fptr, "%lf\t\t%lf\t\t%lf\n", x_gauss[i], x_analytical[i], (double)(i+1)/(double)N);
         }
 }
 
@@ -177,6 +196,7 @@ double **createAugmentedMatrix(double *sparse_matrix, double *r, int N)
         return augmented_matrix;
 }
 
+/* prints all elements of augmented matrix */
 void printAugmentedMatrix(double **augmented_matrix, int N){
 
         for(int i = 0; i < N; i++) {
@@ -185,4 +205,16 @@ void printAugmentedMatrix(double **augmented_matrix, int N){
                 }
                 printf("\n");
         }
+}
+
+/* plots graph between theta, theta_exact vs x* */
+void plot1(char *commands[], int no_of_commands)
+{
+        FILE *gnuplotPipe = popen("gnuplot -persistent", "w");
+
+        for(int i = 0; i<no_of_commands; i++) {
+                fprintf(gnuplotPipe, "%s \n", commands[i]);
+        }
+
+        pclose(gnuplotPipe);
 }
