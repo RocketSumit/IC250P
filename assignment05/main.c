@@ -23,7 +23,6 @@ int main(int argc, char const *argv[]) {
         double *main_diagonal = NULL, *below_diagonal = NULL, *above_diagonal = NULL, *r = NULL;
 
         create_array(&main_diagonal, &below_diagonal, &above_diagonal, &r,  N, c1);
-        //displayArray(main_diagonal, below_diagonal, above_diagonal, r, N);
 
         double **augmented_matrix = NULL, *x_gauss = NULL, *x_analytical = NULL;
 
@@ -32,7 +31,22 @@ int main(int argc, char const *argv[]) {
         x_analytical = analyticalSolution (B, N);
         printToFile(x_gauss, x_analytical, N);
 
+        double error;
+        error = errorEstimation(x_gauss, x_analytical, N);
+        printError(error, N);
+
         char *commandsForGnuplot[] = { "set terminal png ", "set termopt enhanced ", "set xlabel \"x^* -->\"", "set ylabel \"θ -->\"", " set output 'a.png'", " plot \"results.txt\" using 3:1 with lines title \"θ_{gauss}\" ,\"results.txt\" using 3:2 with lines title \"θ_{actual}"};
         plot1(commandsForGnuplot, 6);
+
+        /* free memory */
+        free(sparse_matrix);
+        free(main_diagonal);
+        free(above_diagonal);
+        free(below_diagonal);
+        free(augmented_matrix);
+        free(x_gauss);
+        free(x_analytical);
+        free(r);
+
         return 0;
 }

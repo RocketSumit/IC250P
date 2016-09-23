@@ -137,7 +137,7 @@ double* gaussElimination(double **augmented_matrix, int N)
 
 double* analyticalSolution(double B, int N)
 {
-        double *x = (double *) malloc(sizeof(double));
+        double *x = (double *) malloc(N*sizeof(double));
         double argument = sqrt(B);
 
         for(int i =0; i<N; i++) {
@@ -149,7 +149,7 @@ double* analyticalSolution(double B, int N)
 
 /* determinnes root mean square error for entire temperatures */
 
-double errorEstimation(double *x_analytical, double *x_gauss, int N)
+double errorEstimation(double *x_gauss, double *x_analytical, int N)
 {
         double sum = 0;
 
@@ -218,4 +218,19 @@ void plot1(char *commands[], int no_of_commands)
         }
 
         pclose(gnuplotPipe);
+}
+
+/* print the rms_error for value of N to file */
+void printError(double error, int N)
+{
+        FILE *fptr = NULL;
+        fptr = fopen("error.txt", "a");
+
+        if(ftell(fptr) == 0)
+                fprintf(fptr, "%s\t\t%s\n","#RMS_error", "N");
+
+        fprintf(fptr, "%lf\t\t%d\n", error, N);
+
+        fclose(fptr);
+
 }
