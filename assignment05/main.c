@@ -32,7 +32,7 @@ int main(int argc, char const *argv[]) {
         x_analytical = analyticalSolution (B, N);
         printToFile(x_gauss, x_analytical, N);
 
-        char *commandsForGnuplot[] = { "set terminal png"," set title\"theta vs x*\"", " set output 'a.png'", " plot \"results.txt\" using 1:3 with lines "};
+        char *commandsForGnuplot[] = { "set terminal png", "set xlabel \"x*\"", "set ylabel \"theta\"", " set output 'a.png'", " plot \"results.txt\" using 3:1 with lines ,\"results.txt\" using 3:2 with lines "};
         plot1(commandsForGnuplot, 5);
         return 0;
 }
