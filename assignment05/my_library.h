@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#define clear()  printf("\033[H\033[J")
 
 struct coefficients
 {

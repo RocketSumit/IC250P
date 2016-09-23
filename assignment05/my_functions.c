@@ -171,6 +171,7 @@ void printToFile(double* x_gauss, double *x_analytical, int N)
         for (int i = 0; i < N; i++ ) {
                 fprintf(fptr, "%lf\t\t%lf\t\t%lf\n", x_gauss[i], x_analytical[i], (double)(i+1)/(double)N);
         }
+        fclose(fptr);
 }
 
 double **createAugmentedMatrix(double *sparse_matrix, double *r, int N)

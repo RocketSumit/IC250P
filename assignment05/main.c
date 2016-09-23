@@ -6,6 +6,7 @@ int main(int argc, char const *argv[]) {
         int N, row_n, column_n;
         double B;
 
+        clear();
         printf("Enter the value of N: ");
         scanf("%d", &N);
         printf("Enter the value of B: ");
@@ -31,7 +32,7 @@ int main(int argc, char const *argv[]) {
         x_analytical = analyticalSolution (B, N);
         printToFile(x_gauss, x_analytical, N);
 
-        char *commandsForGnuplot[] = { "set terminal png"," set title\"theta vs x*\"", " set output 'a.png'", " plot \"results.txt\" using 1:3 "};
+        char *commandsForGnuplot[] = { "set terminal png"," set title\"theta vs x*\"", " set output 'a.png'", " plot \"results.txt\" using 1:3 with lines "};
         plot1(commandsForGnuplot, 5);
         return 0;
 }
