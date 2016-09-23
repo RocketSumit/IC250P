@@ -234,3 +234,24 @@ void printError(double error, int N)
         fclose(fptr);
 
 }
+
+/* Use four arrays
+   double *thomasAlgorithm(double *main_diagonal, double *below_diagonal, double *above_diagonal, double *r, int N)
+   {
+        double *x = (double *)malloc(N*sizeof(double));
+
+        /* Forward elimination */
+for (int i = 1; i< N; i++) {
+        *(main_diagonal + i ) -= (*(above_diagonal + i - 1)) * (*(below_diagonal + i))/(*(main_diagonal + i - 1));
+        *(r + i) -= (*(r + i - 1))*(*(below_diagonal + i))/(*(main_diagonal + i - 1));
+}
+
+/* backward substitution */
+x[N - 1] = (*(r[N - 1]))/(*(main_diagonal + N - 1));
+
+for (int j = N - 2; j>-1; j--) {
+        x[j] = (*(r[j]) - (*(above_diagonal + j) * x[j + 1]))/(*(main_diagonal + j));
+}
+
+return x;
+}

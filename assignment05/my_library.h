@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 #define clear()  printf("\033[H\033[J")
 
 struct coefficients
@@ -25,5 +26,7 @@ void printToFile(double* x_gauss, double *x_analytical, int N);
 void plot1(char *commands[], int no_of_commands);
 void printError(double error, int N);
 double errorEstimation(double *x_gauss, double *x_analytical, int N);
+double *thomasAlgorithm(double *main_diagonal, double *below_diagonal, double *above_diagonal, double *r, int N);
+
 
 #endif
