@@ -166,7 +166,7 @@ void printToFile(double* x_gauss, double *x_analytical, int N)
 {
         FILE *fptr = NULL;
         fptr = fopen("results.txt", "w");
-        fprintf(fptr, "%s\t%s\t\t%s\n", "#gaussElimination", "analytical", "x*");
+        fprintf(fptr, "%s\t%s\t\t%s\n", "#computed", "analytical", "x*");
 
         for (int i = 0; i < N; i++ ) {
                 fprintf(fptr, "%lf\t\t%lf\t\t%lf\n", x_gauss[i], x_analytical[i], (double)(i+1)/(double)N);
@@ -176,7 +176,7 @@ void printToFile(double* x_gauss, double *x_analytical, int N)
 
 double **createAugmentedMatrix(double *sparse_matrix, double *r, int N)
 {
-        double **augmented_matrix = (double **) malloc((N) *sizeof(double *));
+        double **augmented_matrix = (double **) malloc(N *sizeof(double *));
 
         for (int i =0; i<N; i++) {
                 augmented_matrix[i] = (double *)malloc((N + 1)*sizeof(double));
@@ -235,23 +235,23 @@ void printError(double error, int N)
 
 }
 
-/* Use four arrays
-   double *thomasAlgorithm(double *main_diagonal, double *below_diagonal, double *above_diagonal, double *r, int N)
-   {
+/* Using three diagonal and right hand side vector, compute x */
+double *thomasAlgorithm(double *main_diagonal, double *below_diagonal, double *above_diagonal, double *r, int N)
+{
         double *x = (double *)malloc(N*sizeof(double));
 
         /* Forward elimination */
-for (int i = 1; i< N; i++) {
-        *(main_diagonal + i ) -= (*(above_diagonal + i - 1)) * (*(below_diagonal + i))/(*(main_diagonal + i - 1));
-        *(r + i) -= (*(r + i - 1))*(*(below_diagonal + i))/(*(main_diagonal + i - 1));
-}
+        for (int i = 1; i< N; i++) {
+                *(main_diagonal + i ) -= (*(above_diagonal + i - 1)) * (*(below_diagonal + i - 1))/(*(main_diagonal + i - 1));
+                *(r + i) -= (*(r + i - 1))*(*(below_diagonal + i - 1))/(*(main_diagonal + i - 1));
+        }
 
 /* backward substitution */
-x[N - 1] = (*(r[N - 1]))/(*(main_diagonal + N - 1));
+        x[N - 1] = (*(r + N - 1))/(*(main_diagonal + N - 1));
 
-for (int j = N - 2; j>-1; j--) {
-        x[j] = (*(r[j]) - (*(above_diagonal + j) * x[j + 1]))/(*(main_diagonal + j));
-}
+        for (int j = N - 2; j>-1; j--) {
+                x[j] = (*(r + j) - (*(above_diagonal + j) * x[j + 1]))/(*(main_diagonal + j));
+        }
 
-return x;
+        return x;
 }
