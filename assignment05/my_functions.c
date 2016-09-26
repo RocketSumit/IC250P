@@ -141,7 +141,7 @@ double* analyticalSolution(double B, int N)
         double argument = sqrt(B);
 
         for(int i =0; i<N; i++) {
-                x[i] = cosh(argument*(double)(1 - ((double)(i + 1)/(double)N)))/cosh(argument);
+                x[i] = cosh(argument*(double)(1 - ((double)(i)/(double)(N - 1))))/cosh(argument);
         }
 
         return x;
@@ -162,11 +162,11 @@ double errorEstimation(double *x_gauss, double *x_analytical, int N)
 
 }
 
-void printToFile(double* x_gauss, double *x_analytical, int N)
+void printSolutionToFile(double* x_gauss, double *x_analytical, int N, char *filename)
 {
         FILE *fptr = NULL;
-        fptr = fopen("results.txt", "w");
-        fprintf(fptr, "%s\t%s\t\t%s\n", "#computed", "analytical", "x*");
+        fptr = fopen(filename, "w");
+        fprintf(fptr, "%s\t%s\t\t%s\n", "#gauss", "analytical", "x*");
 
         for (int i = 0; i < N; i++ ) {
                 fprintf(fptr, "%lf\t\t%lf\t\t%lf\n", x_gauss[i], x_analytical[i], (double)(i+1)/(double)N);
@@ -209,22 +209,28 @@ void printAugmentedMatrix(double **augmented_matrix, int N){
 }
 
 /* plots graph between theta, theta_exact vs x* */
-void plot1(char *commands[], int no_of_commands)
+void plot1(char *filename, int N)
 {
         FILE *gnuplotPipe = popen("gnuplot -persistent", "w");
 
-        for(int i = 0; i<no_of_commands; i++) {
-                fprintf(gnuplotPipe, "%s \n", commands[i]);
+        char *commandsForGnuplot[4] = { "set terminal png ", "set termopt enhanced ", "set xlabel \"x^* -->\"", "set ylabel \"θ -->\""};
+
+        for(int i = 0; i<4; i++) {
+                fprintf(gnuplotPipe, "%s\n", commandsForGnuplot[i]);
         }
+
+        fprintf(gnuplotPipe, "set title \"θ vs x^* for N = %d\"\n", N );
+        fprintf(gnuplotPipe, "set output \"graph_%s.png\"\n", filename);
+        fprintf(gnuplotPipe, "plot \"results_%s.txt\" using 3:1 with lines title \"θ_{%s}\" ,\"results_%s.txt\" using 3:2 with lines title \"θ_{actual}\"\n ", filename, filename, filename);
 
         pclose(gnuplotPipe);
 }
 
 /* print the rms_error for value of N to file */
-void printError(double error, int N)
+void printError(double error, int N, char *filename)
 {
         FILE *fptr = NULL;
-        fptr = fopen("error.txt", "a");
+        fptr = fopen(filename, "a");
 
         if(ftell(fptr) == 0)
                 fprintf(fptr, "%s\t\t%s\n","#RMS_error", "N");
@@ -254,4 +260,21 @@ double *thomasAlgorithm(double *main_diagonal, double *below_diagonal, double *a
         }
 
         return x;
+}
+
+void plotErrorGraph(char *filename)
+{
+        FILE *gnuplotPipe = popen("gnuplot -persistent", "w");
+
+        char *commandsForGnuplot[4] = { "set terminal png ", "set termopt enhanced ", "set xlabel \"N -->\"", "set ylabel \"Error -->\""};
+
+        for(int i = 0; i<4; i++) {
+                fprintf(gnuplotPipe, "%s\n", commandsForGnuplot[i]);
+        }
+
+        fprintf(gnuplotPipe, "set title \"Error vs N for %sMethod\"\n", filename);
+        fprintf(gnuplotPipe, "set output \"error_%s.png\"\n", filename);
+        fprintf(gnuplotPipe, "plot \"error_%s.txt\" using 2:1 with lines title \"Error analysis\" ",filename);
+
+        pclose(gnuplotPipe);
 }

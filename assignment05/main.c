@@ -19,11 +19,12 @@ int main(int argc, char const *argv[]) {
 
         start = clock();
 
-        struct coefficients c1 = {N*N, -1*(2*N*N + B), N*N};
+        struct coefficients c1 = {(N - 1) * (N - 1), -1*(2*(N - 1) * (N - 1) + B), (N - 1) * (N - 1)};
 
         row_n = column_n = N; //setting value of row and column
 
         create_array(&main_diagonal, &below_diagonal, &above_diagonal, &r,  N, c1);
+
 
         switch(choice) {
         case 1:
@@ -36,12 +37,16 @@ int main(int argc, char const *argv[]) {
 
                 /* write data to file */
                 printf("Writing the output in the result files.\n\n");
-                printToFile(x_computed, x_analytical, N);
-                printError(error, N);
+                printSolutionToFile(x_computed, x_analytical, N, "results_gauss.txt");
+                printError(error, N, "error_gauss.txt");
                 end = clock();
                 time_taken = (double)(end - start)/CLOCKS_PER_SEC;
                 printf("Time taken is %lf ms\n\n", time_taken*1000);
 
+                /* plotting graphs using gnuplot */
+                printf("Plotting the required graphs.\n\n");
+                plot1( "gauss", N );
+                plotErrorGraph("gauss");
                 break;
 
         case 2:
@@ -53,17 +58,18 @@ int main(int argc, char const *argv[]) {
 
                 /* write data to file */
                 printf("Writing the output in the result files.\n\n");
-                printToFile(x_computed, x_analytical, N);
-                printError(error, N);
+                printSolutionToFile(x_computed, x_analytical, N, "results_thomas.txt");
+                printError(error, N, "error_thomas.txt");
                 end = clock();
                 time_taken = (double)(end - start)/CLOCKS_PER_SEC;
                 printf("Time taken is %lf ms\n\n", time_taken*1000);
-        }
 
-        /* plotting graphs using gnuplot */
-        printf("Plotting the required graphs\n\n");
-        char *commandsForGnuplot[] = { "set terminal png ", "set termopt enhanced ", "set xlabel \"x^* -->\"", "set ylabel \"θ -->\"", " set output 'a.png'", " plot \"results.txt\" using 3:1 with lines title \"θ_{gauss}\" ,\"results.txt\" using 3:2 with lines title \"θ_{actual}"};
-        plot1(commandsForGnuplot, 6);
+                /* plotting graphs using gnuplot */
+                printf("Plotting the required graphs.\n\n");
+                plot1( "thomas", N );
+                plotErrorGraph("thomas");
+
+        }
 
         /* free the no longer required memory */
         free(sparse_matrix);

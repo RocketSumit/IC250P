@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <string.h>
+
 #define clear()  printf("\033[H\033[J")
 
 struct coefficients
@@ -22,11 +24,11 @@ double **createAugmentedMatrix(double *sparse_matrix, double *r, int N);
 void printAugmentedMatrix(double **augmented_matrix, int N);
 double* gaussElimination(double **augmented_matrix, int N);
 double* analyticalSolution(double B, int N);
-void printToFile(double* x_gauss, double *x_analytical, int N);
-void plot1(char *commands[], int no_of_commands);
-void printError(double error, int N);
+void printSolutionToFile(double* x_gauss, double *x_analytical, int N, char *filename);
+void plot1(char *filename, int N);
+void printError(double error, int N, char *filename);
 double errorEstimation(double *x_gauss, double *x_analytical, int N);
 double *thomasAlgorithm(double *main_diagonal, double *below_diagonal, double *above_diagonal, double *r, int N);
-
+void plotErrorGraph(char *filename);
 
 #endif

@@ -8,4 +8,4 @@ main.o: my_functions.c main.c my_library.h
 	cc -c my_functions.c main.c -g
 
 clean:
-	rm mechanics results.txt a.png error.txt my_functions.o main.o
+	rm mechanics *.txt *.png my_functions.o main.o
