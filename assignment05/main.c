@@ -4,7 +4,7 @@ int main(int argc, char const *argv[]) {
         double *sparse_matrix = NULL;
         double *main_diagonal = NULL, *below_diagonal = NULL, *above_diagonal = NULL, *r = NULL;
         double **augmented_matrix = NULL, *x_computed = NULL, *x_analytical = NULL;
-        double B, error, time_taken;
+        double B, error, time_taken, memory_used;
 
         int N, row_n, column_n, choice;
         clock_t start, end;
@@ -23,12 +23,17 @@ int main(int argc, char const *argv[]) {
 
         row_n = column_n = N; //setting value of row and column
 
+        createSparse(&sparse_matrix, N, c1);
         create_array(&main_diagonal, &below_diagonal, &above_diagonal, &r,  N, c1);
 
+        //displayMatrix(sparse_matrix, N, N);
+        //printf("\n");
+        //displayArray(main_diagonal, below_diagonal, above_diagonal, r, N);
+        //printf("\n");
 
         switch(choice) {
         case 1:
-                createSparse(&sparse_matrix, N, c1);
+
                 /* does the computation required for gaussElimination */
                 augmented_matrix = createAugmentedMatrix(sparse_matrix, r, N);
                 x_computed = gaussElimination(augmented_matrix, N);
@@ -47,6 +52,11 @@ int main(int argc, char const *argv[]) {
                 printf("Plotting the required graphs.\n\n");
                 plot1( "gauss", N );
                 plotErrorGraph("gauss");
+
+                /* calculate the memory used */
+                memory_used = sizeof(sparse_matrix)* (N*N) + sizeof(augmented_matrix)*(N*(N + 1)) + sizeof(x_analytical)*N + sizeof(x_computed)*N + sizeof(r)*N;
+                printf("Space used is %lf MB\n\n", memory_used/(1024.0*1024.0));
+
                 break;
 
         case 2:
@@ -68,6 +78,10 @@ int main(int argc, char const *argv[]) {
                 printf("Plotting the required graphs.\n\n");
                 plot1( "thomas", N );
                 plotErrorGraph("thomas");
+
+                /* calculate the memory used */
+                memory_used = sizeof(sparse_matrix)* (N*N) + sizeof(x_analytical)*N + sizeof(x_computed)*N + sizeof(main_diagonal)*N + sizeof(above_diagonal)*(N - 1) + sizeof(below_diagonal)*(N - 1) + sizeof(r)*N;
+                printf("Space used is %lf MB\n\n", memory_used/(1024.0*1024.0));
 
         }
 

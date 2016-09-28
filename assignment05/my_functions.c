@@ -88,6 +88,7 @@ void create_array(double **main_diagonal, double ** below_diagonal, double **abo
         }
 }
 
+/* display all elements of major arrays */
 void displayArray(double *main_diagonal, double *below_diagonal, double *above_diagonal, double *r, int N)
 {
         printf("[b]\t\t[d]\t\t[a]\t\t[r]\n");
@@ -98,6 +99,7 @@ void displayArray(double *main_diagonal, double *below_diagonal, double *above_d
         printf("\t\t%lf\t\t\t%lf\n",*(main_diagonal + N - 1), *(r + N - 1));
 }
 
+/* sparse matrix is solved using gauss elimination method */
 double* gaussElimination(double **augmented_matrix, int N)
 {
         int i, j, k;
@@ -135,6 +137,7 @@ double* gaussElimination(double **augmented_matrix, int N)
         return x;
 }
 
+/* computes analytical solution using defined mathematical functions */
 double* analyticalSolution(double B, int N)
 {
         double *x = (double *) malloc(N*sizeof(double));
@@ -148,7 +151,6 @@ double* analyticalSolution(double B, int N)
 }
 
 /* determinnes root mean square error for entire temperatures */
-
 double errorEstimation(double *x_gauss, double *x_analytical, int N)
 {
         double sum = 0;
@@ -162,6 +164,7 @@ double errorEstimation(double *x_gauss, double *x_analytical, int N)
 
 }
 
+/* copy the gauss/thomas and analytical solutions to a file */
 void printSolutionToFile(double* x_gauss, double *x_analytical, int N, char *filename)
 {
         FILE *fptr = NULL;
@@ -174,6 +177,7 @@ void printSolutionToFile(double* x_gauss, double *x_analytical, int N, char *fil
         fclose(fptr);
 }
 
+/* merge sparse matrix with the right hand side vector */
 double **createAugmentedMatrix(double *sparse_matrix, double *r, int N)
 {
         double **augmented_matrix = (double **) malloc(N *sizeof(double *));
@@ -262,6 +266,7 @@ double *thomasAlgorithm(double *main_diagonal, double *below_diagonal, double *a
         return x;
 }
 
+/* plot error vs N graph */
 void plotErrorGraph(char *filename)
 {
         FILE *gnuplotPipe = popen("gnuplot -persistent", "w");
