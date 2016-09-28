@@ -1,3 +1,10 @@
+/*.......................................................
+   Name: Sumit Patidar
+   Roll no: B15237
+   Purpose: IC260 assignment 05
+   Date: 28/09/16
+   .......................................................*/
+
 #include "my_library.h"
 
 /* Dynamically creates matrix of sizeof row_n*column_n */
@@ -213,7 +220,7 @@ void printAugmentedMatrix(double **augmented_matrix, int N){
 }
 
 /* plots graph between theta, theta_exact vs x* */
-void plot1(char *filename, int N)
+void plotSoultion(char *filename, int N)
 {
         FILE *gnuplotPipe = popen("gnuplot -persistent", "w");
 
@@ -271,15 +278,15 @@ void plotErrorGraph(char *filename)
 {
         FILE *gnuplotPipe = popen("gnuplot -persistent", "w");
 
-        char *commandsForGnuplot[4] = { "set terminal png ", "set termopt enhanced ", "set xlabel \"N -->\"", "set ylabel \"Error -->\""};
+        char *commandsForGnuplot[6] = { "set terminal png ", "set termopt enhanced ", "set xlabel \"N -->\"", "set ylabel \"Error -->\"", "set xrange [0:10000]", "set yrange [0.0000:1]"};
 
-        for(int i = 0; i<4; i++) {
+        for(int i = 0; i<6; i++) {
                 fprintf(gnuplotPipe, "%s\n", commandsForGnuplot[i]);
         }
 
         fprintf(gnuplotPipe, "set title \"Error vs N for %sMethod\"\n", filename);
         fprintf(gnuplotPipe, "set output \"error_%s.png\"\n", filename);
-        fprintf(gnuplotPipe, "plot \"error_%s.txt\" using 2:1 with lines title \"Error analysis\" ",filename);
+        fprintf(gnuplotPipe, "plot \"error_%s.txt\" using 2:1 with linespoints title \"Error analysis\" ",filename);
 
         pclose(gnuplotPipe);
 }

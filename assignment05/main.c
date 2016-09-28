@@ -1,3 +1,10 @@
+/*.......................................................
+   Name: Sumit Patidar
+   Roll no: B15237
+   Purpose: IC260 assignment 05
+   Date: 28/09/16
+   .......................................................*/
+
 #include "my_library.h"
 
 int main(int argc, char const *argv[]) {
@@ -26,11 +33,6 @@ int main(int argc, char const *argv[]) {
         createSparse(&sparse_matrix, N, c1);
         create_array(&main_diagonal, &below_diagonal, &above_diagonal, &r,  N, c1);
 
-        //displayMatrix(sparse_matrix, N, N);
-        //printf("\n");
-        //displayArray(main_diagonal, below_diagonal, above_diagonal, r, N);
-        //printf("\n");
-
         switch(choice) {
         case 1:
 
@@ -50,7 +52,7 @@ int main(int argc, char const *argv[]) {
 
                 /* plotting graphs using gnuplot */
                 printf("Plotting the required graphs.\n\n");
-                plot1( "gauss", N );
+                plotSoultion( "gauss", N );
                 plotErrorGraph("gauss");
 
                 /* calculate the memory used */
@@ -76,7 +78,7 @@ int main(int argc, char const *argv[]) {
 
                 /* plotting graphs using gnuplot */
                 printf("Plotting the required graphs.\n\n");
-                plot1( "thomas", N );
+                plotSoultion( "thomas", N );
                 plotErrorGraph("thomas");
 
                 /* calculate the memory used */
