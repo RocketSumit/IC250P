@@ -4,10 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <float.h>
+#include <limits.h>
 
-struct AdjListNode* newAdjListNode(int dest, double weight);
+struct AdjListNode* newAdjListNode(int dest, int weight);
 struct Graph* createGraph(int V);
-void addEdge(struct Graph *graph, int src, int dest, double weight);
+void addEdge(struct Graph *graph, int src, int dest, int weight);
 void printGraph(struct Graph *graph);
 struct MinHeapNode* newMinHeapNode(int v, int dist);
 struct MinHeap* createMinHeap(int capacity);
@@ -17,7 +18,7 @@ int isEmpty(struct MinHeap* minHeap);
 struct MinHeapNode* extractMin(struct MinHeap* minHeap);
 void decreaseKey(struct MinHeap* minHeap, int v, int dist);
 int isInMinHeap(struct MinHeap *minHeap, int v);
-void printArr(double dist[], int n);
-void dijkstra(struct Graph* graph, int src, double dist[]);
+void printArr(int dist[], int n);
+void dijkstra(struct Graph* graph, int src, int dist[]);
 
 #endif

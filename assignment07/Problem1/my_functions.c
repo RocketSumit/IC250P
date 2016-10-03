@@ -16,12 +16,12 @@ struct AdjList {
    which consist of destination and its weight from source */
 struct AdjListNode {
         int dest;
-        double weight;
+        int weight;
         struct AdjListNode *next;
 };
 
 /* Function to create a node with given vertice */
-struct AdjListNode* newAdjListNode(int dest, double weight)
+struct AdjListNode* newAdjListNode(int dest, int weight)
 {
         struct AdjListNode *new_node = (struct AdjListNode*)malloc(sizeof(struct AdjListNode));
         new_node->dest = dest;
@@ -46,7 +46,7 @@ struct Graph* createGraph(int V)
 }
 
 /* Function to add edge between two vertices */
-void addEdge(struct Graph *graph, int src, int dest, double weight)
+void addEdge(struct Graph *graph, int src, int dest, int weight)
 {
         /* Adds a edge from src to dest and prepends it to the existing list*/
         struct AdjListNode *new_node = newAdjListNode(dest, weight);
@@ -87,6 +87,7 @@ struct MinHeapNode
         int dist;
 };
 
+/* structure to represent min heap */
 struct MinHeap {
         int size; //number of heap nodes present currently
         int capacity; //denotes the capacity of entire heap
@@ -218,15 +219,15 @@ int isInMinHeap(struct MinHeap *minHeap, int v)
 }
 
 /* Function used to print the solution */
-void printArr(double dist[], int n)
+void printArr(int dist[], int n)
 {
         printf("Vertex   Distance from Source\n");
         for (int i = 0; i < n; ++i)
-                printf("%d \t\t %lf\n", i, dist[i]);
+                printf("%d \t\t %d\n", i, dist[i]);
 }
 
 /* Main Algorithm to find the shortest distance of source from all destinations */
-void dijkstra(struct Graph* graph, int src, double dist[])
+void dijkstra(struct Graph* graph, int src, int dist[])
 {
         int V = graph->V;// Get the number of vertices in graph
 
@@ -236,7 +237,7 @@ void dijkstra(struct Graph* graph, int src, double dist[])
         // Initialize min heap with all vertices. dist value of all vertices
         for (int v = 0; v < V; ++v)
         {
-                dist[v] = DBL_MAX;
+                dist[v] = INT_MAX;
                 minHeap->array[v] = newMinHeapNode(v, dist[v]);
                 minHeap->pos[v] = v;
         }
@@ -267,7 +268,7 @@ void dijkstra(struct Graph* graph, int src, double dist[])
 
                         // If shortest distance to v is not finalized yet, and distance to v
                         // through u is less than its previously calculated distance
-                        if (isInMinHeap(minHeap, v) && dist[u] != DBL_MAX &&
+                        if (isInMinHeap(minHeap, v) && dist[u] != INT_MAX &&
                             pCrawl->weight + dist[u] < dist[v])
                         {
                                 dist[v] = dist[u] + pCrawl->weight;
