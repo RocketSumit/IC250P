@@ -25,6 +25,14 @@ struct Graph* createGraph(int V, int E)
         return graph;
 }
 
+/* Adds an edge between source and destination with a given weight */
+void addEdge(struct Graph *graph, int src, int dest, double weight, int edgeCount)
+{
+        graph->array[edgeCount].src = src;
+        graph->array[edgeCount].dest = dest;
+        graph->array[edgeCount].weight = weight;
+}
+
 /* Function to find all shortest distances form source to destination
    using Bellman Ford Algorithm */
 void BellmanFord(struct Graph *graph, int starting_point, double dist[])
@@ -67,4 +75,20 @@ void BellmanFord(struct Graph *graph, int starting_point, double dist[])
                         exit(0);
                 }
         }
+}
+
+/* Find the path where the weight of person is minimum */
+void findMinWeightPlanet(double dist[], int V, double initial_weight)
+{
+        int planet_count;
+        double shortest_path;
+
+        shortest_path = dist[0];
+
+        for(planet_count = 1; planet_count<V; planet_count++) {
+                if(dist[planet_count]<shortest_path)
+                        shortest_path = dist[planet_count];
+        }
+
+        printf("\nOUTPUT:\n%d\t%lf\n", planet_count + 1, pow(10, shortest_path + initial_weight));
 }
