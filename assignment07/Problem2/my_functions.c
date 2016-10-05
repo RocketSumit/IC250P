@@ -44,7 +44,8 @@ void BellmanFord(struct Graph *graph, int starting_point, double dist[])
         for (int i = 0; i < V; i++) {
                 if(i == starting_point)
                         dist[i] = 0;
-                dist[i] = DBL_MAX;
+                else
+                        dist[i] = DBL_MAX;
         }
 
         /* Relax all edges |V|- 1 times so that
@@ -77,18 +78,30 @@ void BellmanFord(struct Graph *graph, int starting_point, double dist[])
         }
 }
 
+/* print all vertex and there shortest distances */
+void printSolution(int V, double dist[])
+{
+        printf("\n\nVertex\tDistance\n");
+
+        for(int i = 0; i<V; i++) {
+                printf("%d\t%lf\n", i, dist[i]);
+        }
+}
+
 /* Find the path where the weight of person is minimum */
 void findMinWeightPlanet(double dist[], int V, double initial_weight)
 {
-        int planet_count;
+        int planet_count = 0;
         double shortest_path;
 
         shortest_path = dist[0];
 
-        for(planet_count = 1; planet_count<V; planet_count++) {
-                if(dist[planet_count]<shortest_path)
-                        shortest_path = dist[planet_count];
+        for(int i = 1; i<V; i++) {
+                if(dist[i]<shortest_path) {
+                        shortest_path = dist[i];
+                        planet_count = i;
+                }
         }
 
-        printf("\nOUTPUT:\n%d\t%lf\n", planet_count + 1, pow(10, shortest_path + initial_weight));
+        printf("\nOUTPUT:\n%d\t%lf\n", planet_count + 1, pow(10, shortest_path )*initial_weight);
 }

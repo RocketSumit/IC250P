@@ -10,5 +10,6 @@ struct Graph* createGraph(int V, int E);
 void addEdge(struct Graph *graph, int src, int dest, double weight, int edgeCount);
 void BellmanFord(struct Graph *graph, int starting_point, double dist[]);
 void findMinWeightPlanet(double dist[], int V, double initial_weight);
+void printSolution(int V, double dist[]);
 
 #endif
