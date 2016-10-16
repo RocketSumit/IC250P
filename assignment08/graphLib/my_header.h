@@ -34,6 +34,6 @@ void deleteEdge(struct Graph *graph, int src, int dest);
 
 double* dijkstra(struct Graph* graph, int src);
 
-
+double* BellmanFord(struct Graph *graph, int starting_point);
 
 #endif

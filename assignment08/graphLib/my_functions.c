@@ -17,7 +17,7 @@ struct Graph* createGraph(int V, int attribute)
 }
 
 /* Function to create a node with given vertice */
-struct AdjListNode* newAdjListNode(int dest, int weight)
+struct AdjListNode* newAdjListNode(int dest, double weight)
 {
         struct AdjListNode *new_node = (struct AdjListNode*)malloc(sizeof(struct AdjListNode));
         new_node->dest = dest;
@@ -205,7 +205,7 @@ void printArr(double *dist, int n)
                 printf("%d \t\t %lf\n", i, dist[i]);
 }
 
-/* Main Algorithm to find the shortest distance of source from all destinations */
+/* Dijkstra Algorithm to find the shortest distance of source from all destinations */
 double* dijkstra(struct Graph* graph, int src)
 {
         int V = graph->V;// Get the number of vertices in graph
@@ -261,4 +261,81 @@ double* dijkstra(struct Graph* graph, int src)
         }
 
         return dist;
+}
+
+/* BellmanFord algorithm to solve the single source shortest path problem */
+double* BellmanFord(struct Graph *graph, int starting_point)
+{
+        int V = graph->V;
+
+        double *dist = (double *)malloc(V*sizeof(double));
+
+        /* Initialize the all distances from source to destination */
+        for (int i = 0; i < V; i++) {
+                if(i == starting_point)
+                        dist[i] = 0;
+                else
+                        dist[i] = DBL_MAX;
+        }
+
+        /* Relax all edges |V|- 1 times so that
+           shortest path of all destination from source have atmost |v| - 1 edges */
+        int u, v;
+        double weight;
+
+        struct AdjListNode *iterator = NULL;
+
+        for(int i = 0; i<V - 1; i++) {
+
+                for(int j = 0; j<V; j++) {
+                        iterator = graph->array[j].head;
+
+                        while(iterator!= NULL) {
+                                u = j;
+                                v = iterator->dest;
+                                weight = iterator->weight;
+                                iterator = iterator->next;
+
+                                if(dist[u] != DBL_MAX && dist[v]> dist[u] + weight)
+                                        dist[v] = dist[u] + weight;
+                        }
+                }
+        }
+
+        /* check for negative weight cycles if any */
+        for(int j = 0; j<V; j++) {
+                iterator = graph->array[j].head;
+
+                while(iterator!=NULL) {
+                        u = j;
+                        v = iterator->dest;
+                        weight = iterator->weight;
+                        iterator = iterator->next;
+
+                        if(dist[u] != DBL_MAX && dist[v]> dist[u] + weight) {
+                                printf("Negative Cycles Exist, hence problem cannot be solved.\n");
+                                exit(0);
+                        }
+                }
+        }
+
+        return dist;
+}
+
+/* Find the path where the weight of person is minimum */
+void findMinWeightPlanet(double *dist, int V, double initial_weight)
+{
+        int planet_count = 0;
+        double shortest_path;
+
+        shortest_path = dist[0];
+
+        for(int i = 1; i<V; i++) {
+                if(dist[i]<shortest_path) {
+                        shortest_path = dist[i];
+                        planet_count = i;
+                }
+        }
+
+        printf("\nOUTPUT:\n%d\t%lf\n", planet_count + 1, pow(10, shortest_path )*initial_weight);
 }

@@ -4,13 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <float.h>
+#include <math.h>
 
 /* structure to represent graph which consist
    of array of adjacency lists */
 struct Graph {
-        int V;
+        int V, E;
         int attribute;
         struct AdjList *array;
+        struct edges *arrayEdges;
 };
 
 /* structure to represent adjacency list */
@@ -34,6 +36,8 @@ void deleteEdge(struct Graph *graph, int src, int dest);
 
 double* dijkstra(struct Graph* graph, int src);
 
+double* BellmanFord(struct Graph *graph, int starting_point);
 
+void findMinWeightPlanet(double dist[], int V, double initial_weight);
 
 #endif
