@@ -46,14 +46,14 @@ void addEdge(struct Graph *graph, int src, int dest, double weight)
 /* Funtion to delete an adge between two vertices */
 void deleteEdge(struct Graph *graph, int src, int dest)
 {
-        struct AdjListNode *temp = graph->array[src].head;
-
+        struct AdjListNode *iterator = graph->array[src].head;
+        struct AdjListNode *target = NULL;
         /* find the node to be deleted by traversing the list */
-        while(temp->next->dest != dest) {
-                temp = temp->next;
+        while(iterator->next->dest != dest) {
+                iterator = iterator->next;
         }
 
-        temp->next = temp->next->next;
-
-        free(temp->next);
+        target = iterator->next;
+        iterator->next = iterator->next->next;
+        free(target);
 }
