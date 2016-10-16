@@ -261,22 +261,22 @@ void dijkstra(struct Graph* graph, int src, int dist[])
 
                 // Traverse through all adjacent vertices of u (the extracted
                 // vertex) and update their distance values
-                struct AdjListNode* pCrawl = graph->array[u].head;
-                while (pCrawl != NULL)
+                struct AdjListNode* iterator = graph->array[u].head;
+                while (iterator != NULL)
                 {
-                        int v = pCrawl->dest;
+                        int v = iterator->dest;
 
                         // If shortest distance to v is not finalized yet, and distance to v
                         // through u is less than its previously calculated distance
                         if (isInMinHeap(minHeap, v) && dist[u] != INT_MAX &&
-                            pCrawl->weight + dist[u] < dist[v])
+                            iterator->weight + dist[u] < dist[v])
                         {
-                                dist[v] = dist[u] + pCrawl->weight;
+                                dist[v] = dist[u] + iterator->weight;
 
                                 // update distance value in min heap also
                                 decreaseKey(minHeap, v, dist[v]);
                         }
-                        pCrawl = pCrawl->next;
+                        iterator = iterator->next;
                 }
         }
 }

@@ -10,7 +10,7 @@ struct Graph
 /* structure to represent edges */
 struct edges
 {
-        int src, dest;
+        int src, dest; // since the graph is directed
         double weight;
 };
 
@@ -63,6 +63,10 @@ void BellmanFord(struct Graph *graph, int starting_point, double dist[])
                         if(dist[u] != DBL_MAX && dist[v]> dist[u] + weight)
                                 dist[v] = dist[u] + weight;
                 }
+                if(i== 0)
+                        for(int k = 0; k<V; k++) {
+                                printf("%lf\t", dist[k]);
+                        }
         }
 
         /* check for negative weight cycles if any */
