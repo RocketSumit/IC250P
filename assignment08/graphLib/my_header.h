@@ -40,4 +40,7 @@ int degree(struct Graph *graph, int v);
 
 int* neigh(struct Graph *graph, int v);
 
+void findMinWeightPlanet(double *dist, int V, double initial_weight);
+
+
 #endif

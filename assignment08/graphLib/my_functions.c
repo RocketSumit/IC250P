@@ -367,9 +367,9 @@ int* neigh(struct Graph *graph, int v)
         int *neighbours = (int *)malloc(total_neighbours*sizeof(int));
 
         while(iterator!= NULL) {
-                count++;
                 neighbours[count] = iterator->dest;
                 iterator = iterator->next;
+                count++;
         }
 
         return neighbours;
