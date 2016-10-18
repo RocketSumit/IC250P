@@ -374,3 +374,21 @@ int* neigh(struct Graph *graph, int v)
 
         return neighbours;
 }
+
+/* Performs dfs traversal */
+void dfs(struct Graph *graph, int v, int visited[])
+{
+
+        visited[v] = 1;
+
+        printf("\nThe graph vertex %d just got visired.\n", v);
+
+        struct AdjListNode *iterator = graph->array[v].head;
+
+        while(iterator!=NULL) {
+                if(visited[iterator->dest] != 1) {
+                        dfs(graph, iterator->dest, visited);
+                }
+                iterator = iterator->next;
+        }
+}
