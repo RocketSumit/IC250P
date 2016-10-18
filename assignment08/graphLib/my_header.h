@@ -36,4 +36,8 @@ double* dijkstra(struct Graph* graph, int src);
 
 double* BellmanFord(struct Graph *graph, int starting_point);
 
+int degree(struct Graph *graph, int v);
+
+int* neigh(struct Graph *graph, int v);
+
 #endif

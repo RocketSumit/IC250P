@@ -339,3 +339,38 @@ void findMinWeightPlanet(double *dist, int V, double initial_weight)
 
         printf("\nOUTPUT:\n%d\t%lf\n", planet_count + 1, pow(10, shortest_path )*initial_weight);
 }
+
+/* Returns the number of neigbours of given vertex */
+int degree(struct Graph *graph, int v)
+{
+        struct AdjListNode *iterator = NULL;
+        iterator = graph->array[v].head;
+
+        int neighboursCount = 0;
+
+        while(iterator!= NULL) {
+                neighboursCount++;
+                iterator = iterator->next;
+        }
+
+        return neighboursCount;
+}
+
+/* Function to give the nighbours of given vertex */
+int* neigh(struct Graph *graph, int v)
+{
+        struct AdjListNode *iterator = NULL;
+        iterator = graph->array[v].head;
+
+        int total_neighbours = degree(graph, v), count=0;
+
+        int *neighbours = (int *)malloc(total_neighbours*sizeof(int));
+
+        while(iterator!= NULL) {
+                count++;
+                neighbours[count] = iterator->dest;
+                iterator = iterator->next;
+        }
+
+        return neighbours;
+}
