@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <float.h>
 #include <math.h>
+#include <stdbool.h>
 
 /* structure to represent graph which consist
    of array of adjacency lists */

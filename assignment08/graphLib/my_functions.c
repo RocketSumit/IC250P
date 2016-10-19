@@ -58,6 +58,21 @@ void deleteEdge(struct Graph *graph, int src, int dest)
         free(target);
 }
 
+/* function to find weight of given edge */
+double weight(struct Graph *graph, int src, int dest)
+{
+        struct AdjListNode *iterator = graph->array[src].head;
+        double edge_weight;
+
+        while(iterator->dest != dest) {
+                iterator = iterator->next;
+        }
+
+        edge_weight = iterator->weight;
+
+        return edge_weight;
+}
+
 /* structure to represent node in priority queue
    using minheap tree stucture */
 struct MinHeapNode
@@ -502,4 +517,82 @@ void bfs(struct Graph *graph, int v)
                         iterator = iterator->next;
                 }
         }
+}
+
+/* A utility function to find the vertex with minimum key value, from
+   the set of vertices not yet included in MST */
+int minKey(double key[], bool mstSet[], int V)
+{
+        // Initialize min value
+        double min = DBL_MAX;
+        int min_index;
+
+        for (int v = 0; v < V; v++)
+                if (mstSet[v] == false && key[v] < min)
+                        min = key[v], min_index = v;
+
+        return min_index;
+}
+
+// A utility function to print the constructed MST stored in parent[]
+void printMST(struct Graph *graph, int parent[])
+{
+
+        printf("Edge   Weight\n");
+        for (int i = 1; i < graph->V; i++)
+                printf("%d - %d    %lf \n", parent[i], i, weight(graph, i, parent[i]));
+}
+
+/* Function to construct and print MST for a graph represented using adjacency
+   list representation */
+void primMST(struct Graph *graph)
+{
+        int V = graph->V;
+        int parent[V]; // Array to store constructed MST
+        double key[V]; // Key values used to pick minimum weight edge in cut
+        bool mstSet[V]; // To represent set of vertices not yet included in MST
+
+        // Initialize all keys as INFINITE
+        for (int i = 0; i < V; i++)
+                key[i] = DBL_MAX, mstSet[i] = false;
+
+        // Always include first 1st vertex in MST.
+        key[0] = 0;  // Make key 0 so that this vertex is picked as first vertex
+        parent[0] = -1; // First node is always root of MST
+
+        // The MST will have V vertices
+        for (int count = 0; count < V-1; count++)
+        {
+                // Pick the minimum key vertex from the set of vertices
+                // not yet included in MST
+                int u = minKey(key, mstSet, V), v;
+
+                // Add the picked vertex to the MST Set
+                mstSet[u] = true;
+
+                // Update key value and parent index of the adjacent vertices of
+                // the picked vertex. Consider only those vertices which are not yet
+                // included in MST
+
+                double weight;
+
+                struct AdjListNode *iterator = NULL;
+
+                iterator = graph->array[u].head;
+
+                while(iterator!= NULL) {
+                        v = iterator->dest;
+                        weight = iterator->weight;
+                        iterator = iterator->next;
+
+                        if(mstSet[v] == false && weight < key[v]) {
+                                parent[v] = u;
+                                key[v] = weight;
+                        }
+                }
+        }
+
+
+// print the constructed MST
+        printMST(graph, parent);
 }
