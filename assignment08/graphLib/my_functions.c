@@ -1,4 +1,4 @@
-#include "my_library.h"
+#include "my_header.h"
 
 /* Function to create graph with V vertices with no neighbours */
 struct Graph* createGraph(int V, int attribute)
@@ -390,5 +390,117 @@ void dfs(struct Graph *graph, int v, int visited[])
                         dfs(graph, iterator->dest, visited);
                 }
                 iterator = iterator->next;
+        }
+}
+
+/* Function to create queue */
+Queue* createQueue(int capacity){
+        Queue *ptr = (Queue*)malloc(sizeof(Queue));
+        //initialize queue
+        ptr->capacity = capacity;
+        ptr->rear = ptr->front = -1;
+
+        /* -1 indicates queue is empty */
+        ptr->array = (int *)malloc(sizeof(int));
+
+        return ptr;
+}
+
+/* Inserts the element to queue */
+int Qinsert(Queue* ptr, int data){
+        // check wheather queue is full
+        if((ptr->front == 0 && (ptr->rear) == (ptr->capacity) - 1) || (ptr->front) == (ptr->rear) + 1) {
+                printf("Overflow\n");
+                return -1;
+        }
+
+        // for a non empty queue set rear and front
+        else{
+                if(ptr->front == -1) {
+                        ptr->front = 0;
+                        ptr->rear = 0;
+                }
+                else if((ptr->rear) == (ptr->capacity - 1)) {
+                        ptr->rear = 0;
+                }
+                else{
+                        (ptr->rear)++;
+                }
+        }
+
+        //insert data to array
+        ptr->array[ptr->rear] = data;
+        return 2;
+}
+
+/* Dequeue the element from queue */
+int Qdelete(Queue* ptr){
+        int item;
+        //is queue empty
+        if(ptr->front == -1) {
+                printf("Underflow\n");
+                return -1;
+        }
+        // set the item as front element
+        item = ptr->array[ptr->front];
+
+        //set the value of rear and front
+        if(ptr->front == ptr->rear) {
+                ptr->front = ptr->rear = -1;
+        }
+        else if(ptr->front == (ptr->capacity) - 1) {
+                ptr->front = 0;
+        }
+        else{
+                ptr->front++;
+        }
+
+        return item;
+}
+
+/* check for an enpty queue */
+int isEmptyQueue(Queue* q)
+{
+        if((q->front) == -1)
+                return 1;
+        else
+                return 0;
+}
+
+/* Performs bfs traversal */
+void bfs(struct Graph *graph, int v)
+{
+        #define initial 1
+        #define waiting 2
+        #define visited 3
+
+        int state[graph->V], neighbour;
+
+        /* initialize the state of all nodes */
+        for(int i = 0; i<graph->V; i++) {
+                state[i] = initial;
+        }
+
+        Queue *q = (Queue*)malloc(sizeof(Queue));
+        Qinsert(q, v);
+        state[v] = waiting;
+
+        while(!isEmptyQueue(q)) {
+                v = Qdelete(q);
+                printf("\n The Graph Node : %d Just Got Visited \n",v);
+                state[v] = visited;
+
+                //go to the adjacency list of node v
+                struct AdjListNode *iterator = graph->array[v].head;
+
+                /* inserts all neighbours of node v in queue */
+                while(iterator!=NULL) {
+                        neighbour = iterator->dest;
+                        if(state[neighbour] == initial) {
+                                Qinsert(q, neighbour);
+                                state[neighbour] = waiting;
+                        }
+                        iterator = iterator->next;
+                }
         }
 }

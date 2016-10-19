@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <float.h>
+#include <math.h>
 
 /* structure to represent graph which consist
    of array of adjacency lists */
@@ -25,6 +26,11 @@ struct AdjListNode {
         double weight;
         struct AdjListNode *next;
 };
+
+typedef struct queue {
+        int front, rear, capacity;
+        int *array;
+}Queue;
 
 struct Graph* createGraph(int V, int attribute);
 
