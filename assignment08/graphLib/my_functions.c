@@ -6,6 +6,7 @@ struct Graph* createGraph(int V, int attribute)
         struct Graph *graph = (struct Graph*)malloc(sizeof(struct Graph));
 
         graph->V = V;
+        graph->E = 0;
         graph->attribute = attribute;
         graph->array = (struct AdjList*)malloc(V*sizeof(struct AdjList));
 
@@ -34,6 +35,7 @@ void addEdge(struct Graph *graph, int src, int dest, double weight)
         struct AdjListNode *new_node = newAdjListNode(dest, weight);
         new_node->next = graph->array[src].head;
         graph->array[src].head = new_node;
+        (graph->E)++;
 
         if(graph->attribute == 0) {
                 /* adds a edge from dest to src since graph is undirected*/
@@ -595,4 +597,122 @@ void primMST(struct Graph *graph)
 
 // print the constructed MST
         printMST(graph, parent);
+}
+
+/* Function to create set of edges */
+struct Edge* setOfEdges(struct Graph *graph){
+
+        struct Edge *ptr = (struct Edge*)malloc(sizeof(struct Edge)*(graph->E));
+        int edgesCount = 0;
+
+        for(int i = 0; i<(graph->V); i++) {
+                struct AdjListNode *iterator = NULL;
+                iterator = graph->array[i].head;
+
+                while(iterator!=NULL) {
+                        ptr[edgesCount].src = i;
+                        ptr[edgesCount].dest = iterator->dest;
+                        ptr[edgesCount].weight = iterator->weight;
+                        iterator = iterator->next;
+                        edgesCount++;
+                }
+        }
+
+        return ptr;
+}
+
+/* A utility function to find set of an element i
+   (uses path compression technique) */
+int find(struct subset subsets[], int i)
+{
+        // find root and make root as parent of i (path compression)
+        if (subsets[i].parent != i)
+                subsets[i].parent = find(subsets, subsets[i].parent);
+
+        return subsets[i].parent;
+}
+
+/* A function that does union of two sets of x and y
+   (uses union by rank) */
+void Union(struct subset subsets[], int x, int y)
+{
+        int xroot = find(subsets, x);
+        int yroot = find(subsets, y);
+
+        // Attach smaller rank tree under root of high rank tree
+        // (Union by Rank)
+        if (subsets[xroot].rank < subsets[yroot].rank)
+                subsets[xroot].parent = yroot;
+        else if (subsets[xroot].rank > subsets[yroot].rank)
+                subsets[yroot].parent = xroot;
+
+        // If ranks are same, then make one as root and increment
+        // its rank by one
+        else
+        {
+                subsets[yroot].parent = xroot;
+                subsets[xroot].rank++;
+        }
+}
+
+/* Compare two edges according to their weights.
+   Used in qsort() for sorting an array of edges */
+int myComp(const void* a, const void* b)
+{
+        struct Edge* a1 = (struct Edge*)a;
+        struct Edge* b1 = (struct Edge*)b;
+        return a1->weight > b1->weight;
+}
+
+// The main function to construct MST using Kruskal's algorithm
+void KruskalMST(struct Graph* graph)
+{
+        int V = graph->V;
+        struct Edge result[V]; // Tnis will store the resultant MST
+        int e = 0; // An index variable, used for result[]
+        int i = 0; // An index variable, used for sorted edges
+        struct Edge* edge = setOfEdges(graph);
+
+        // Step 1:  Sort all the edges in non-decreasing order of their weight
+        // If we are not allowed to change the given graph, we can create a copy of
+        // array of edges
+        qsort(edge, graph->E, sizeof(edge[0]), myComp);
+
+        // Allocate memory for creating V ssubsets
+        struct subset *subsets =
+                (struct subset*) malloc( V * sizeof(struct subset) );
+
+        // Create V subsets with single elements
+        for (int v = 0; v < V; ++v)
+        {
+                subsets[v].parent = v;
+                subsets[v].rank = 0;
+        }
+
+        // Number of edges to be taken is equal to V-1
+        while (e < V - 1)
+        {
+                // Step 2: Pick the smallest edge. And increment the index
+                // for next iteration
+                struct Edge next_edge = edge[i++];
+
+                int x = find(subsets, next_edge.src);
+                int y = find(subsets, next_edge.dest);
+
+                // If including this edge does't cause cycle, include it
+                // in result and increment the index of result for next edge
+                if (x != y)
+                {
+                        result[e++] = next_edge;
+                        Union(subsets, x, y);
+                }
+                // Else discard the next_edge
+        }
+
+        // print the contents of result[] to display the built MST
+        printf("Following are the edges in the constructed MST\n");
+        for (i = 0; i < e; ++i)
+                printf("%d -- %d == %d\n", result[i].src, result[i].dest,
+                       result[i].weight);
+        return;
 }

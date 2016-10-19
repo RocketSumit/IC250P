@@ -11,6 +11,7 @@
    of array of adjacency lists */
 struct Graph {
         int V;
+        int E;
         int attribute;
         struct AdjList *array;
 };
@@ -33,6 +34,18 @@ typedef struct queue {
         int *array;
 }Queue;
 
+struct Edge
+{
+        int src, dest, weight;
+};
+
+// A structure to represent a subset for union-find
+struct subset
+{
+        int parent;
+        int rank;
+};
+
 struct Graph* createGraph(int V, int attribute);
 
 void addEdge(struct Graph *graph, int src, int dest, double weight);
@@ -52,5 +65,8 @@ void dfs(struct Graph *graph, int v, int visited[]);
 void bfs(struct Graph *graph, int v);
 
 void primMST(struct Graph *graph);
+
+void KruskalMST(struct Graph* graph);
+
 
 #endif
