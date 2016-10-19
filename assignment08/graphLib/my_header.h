@@ -51,6 +51,6 @@ void dfs(struct Graph *graph, int v, int visited[]);
 
 void bfs(struct Graph *graph, int v);
 
-
+void primMST(struct Graph *graph);
 
 #endif

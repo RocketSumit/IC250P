@@ -61,7 +61,8 @@ void deleteEdge(struct Graph *graph, int src, int dest)
 /* function to find weight of given edge */
 double weight(struct Graph *graph, int src, int dest)
 {
-        struct AdjListNode *iterator = graph->array[src].head;
+        struct AdjListNode *iterator = NULL;
+        iterator = graph->array[src].head;
         double edge_weight;
 
         while(iterator->dest != dest) {
@@ -591,7 +592,6 @@ void primMST(struct Graph *graph)
                         }
                 }
         }
-
 
 // print the constructed MST
         printMST(graph, parent);
