@@ -381,7 +381,7 @@ void dfs(struct Graph *graph, int v, int visited[])
 
         visited[v] = 1;
 
-        printf("\nThe graph vertex %d just got visired.\n", v);
+        printf("\nThe graph vertex %d just got visited.\n", v);
 
         struct AdjListNode *iterator = graph->array[v].head;
 
@@ -398,10 +398,9 @@ Queue* createQueue(int capacity){
         Queue *ptr = (Queue*)malloc(sizeof(Queue));
         //initialize queue
         ptr->capacity = capacity;
-        ptr->rear = ptr->front = -1;
+        ptr->rear = ptr->front = -1; //-1 indicates queue is empty
 
-        /* -1 indicates queue is empty */
-        ptr->array = (int *)malloc(sizeof(int));
+        ptr->array = (int *)malloc(capacity*sizeof(int));
 
         return ptr;
 }
@@ -481,7 +480,7 @@ void bfs(struct Graph *graph, int v)
                 state[i] = initial;
         }
 
-        Queue *q = (Queue*)malloc(sizeof(Queue));
+        Queue *q = createQueue(graph->V);
         Qinsert(q, v);
         state[v] = waiting;
 

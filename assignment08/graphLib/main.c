@@ -1,7 +1,10 @@
 #include "my_header.h"
 
 int main(int argc, char const *argv[]) {
-        struct Graph *graph = createGraph(4, 1);
+
+        system("clear");
+
+        struct Graph *graph = createGraph(11, 1);
         addEdge(graph, 0, 1, 0);
         addEdge(graph, 0, 2, 0);
         addEdge(graph, 1, 2, 0);
@@ -12,6 +15,7 @@ int main(int argc, char const *argv[]) {
         int visited[4] = {0};
 
         dfs(graph, 2, visited);
+        bfs(graph, 2);
 
         return 0;
 }

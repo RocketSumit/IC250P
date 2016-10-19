@@ -48,6 +48,8 @@ int* neigh(struct Graph *graph, int v);
 
 void dfs(struct Graph *graph, int v, int visited[]);
 
+void bfs(struct Graph *graph, int v);
+
 
 
 #endif
